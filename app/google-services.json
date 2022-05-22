@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "538134991363",
+    "project_id": "deltap2team",
+    "storage_bucket": "deltap2team.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538134991363:android:07affa3f1e8917a887f436",
+        "android_client_info": {
+          "package_name": "com.example.teachingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "538134991363-aklg428gois79hp5enftiv9ur10oelcs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt3ZNpyDFtYtrrMhNbQz9tbMiy9-UgNfM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "538134991363-aklg428gois79hp5enftiv9ur10oelcs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/drawable/bg_btn_student.xml" value="0.1025" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/drawable/bg_btn_teacher.xml" value="0.1025" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_login.xml" value="0.19010416666666666" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_sign_up.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_student_dashboard.xml" value="0.19010416666666666" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_student_register.xml" value="0.19010416666666666" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_teacher_dashboard.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_teacher_register.xml" value="0.20416666666666666" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
