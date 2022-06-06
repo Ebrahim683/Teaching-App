@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#0000ff</color>
     <color name="bg_btn">#a1a1dd</color>
+    <color name="dashboard_actionbar_color">#FB73B5</color>
 </resources>

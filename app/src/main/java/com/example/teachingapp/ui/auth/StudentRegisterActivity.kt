@@ -7,7 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.teachingapp.R
-import com.example.teachingapp.ui.dashboard.StudentDashboardActivity
+import com.example.teachingapp.ui.dashboard.studentdashboard.StudentDashboardActivity
 import com.example.teachingapp.ui.model.studentmodel.StudentRegisterModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_student_register.*

@@ -1,4 +1,4 @@
-package com.example.teachingapp.ui.dashboard
+package com.example.teachingapp.ui.dashboard.teacherdashboard
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

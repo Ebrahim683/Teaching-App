@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/drawable/bg_btn.xml" value="0.1025" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/drawable/bg_btn_student.xml" value="0.1025" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/drawable/bg_btn_teacher.xml" value="0.1025" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_login.xml" value="0.19010416666666666" />
@@ -12,6 +13,8 @@
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_student_register.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_teacher_dashboard.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_teacher_register.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/student_rec_row.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/menu/student_dashboard_menu.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

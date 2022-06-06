@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.teachingapp">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,10 +16,11 @@
         android:theme="@style/Theme.TeachingApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.dashboard.StudentDashboardActivity"
-            android:exported="false" />
+            android:name=".ui.dashboard.studentdashboard.StudentDashboardActivity"
+            android:exported="true"
+            android:label="Student Portal" />
         <activity
-            android:name=".ui.dashboard.TeacherDashboardActivity"
+            android:name=".ui.dashboard.teacherdashboard.TeacherDashboardActivity"
             android:exported="false" />
         <activity
             android:name=".ui.auth.StudentRegisterActivity"

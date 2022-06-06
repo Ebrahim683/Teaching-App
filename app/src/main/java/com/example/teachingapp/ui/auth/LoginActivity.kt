@@ -7,7 +7,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.teachingapp.R
-import com.example.teachingapp.ui.main.MainActivity
+import com.example.teachingapp.ui.dashboard.studentdashboard.StudentDashboardActivity
+import com.example.teachingapp.ui.utils.SharedPrifUtils
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -18,11 +19,13 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var email: String
     private lateinit var password: String
+    private lateinit var sharedPrifUtils: SharedPrifUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        sharedPrifUtils = SharedPrifUtils(this)
         mAuth = FirebaseAuth.getInstance()
 
         id_tv_signup.setOnClickListener {
@@ -36,6 +39,11 @@ class LoginActivity : AppCompatActivity() {
 
         id_forgot_pass.setOnClickListener {
             forgotPassword()
+        }
+
+        if (sharedPrifUtils.isLoggedIn()) {
+            startActivity(Intent(this, StudentDashboardActivity::class.java))
+            finish()
         }
 
     }
@@ -59,9 +67,10 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val data = task.result.user
                     alertDialog.dismiss()
-                    Log.d(TAG, "signInUser: ${data!!.email}")
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finishAffinity()
+                    sharedPrifUtils.saveUser(data!!.email.toString())
+                    Log.d(TAG, "signInUser: ${data.email}")
+                    startActivity(Intent(this, StudentDashboardActivity::class.java))
+                    finish()
                 } else {
                     alertDialog.dismiss()
                     Toast.makeText(this, "${task.exception?.localizedMessage}", Toast.LENGTH_SHORT)
