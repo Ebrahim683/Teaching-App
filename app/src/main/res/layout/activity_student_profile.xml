@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.StudentProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/st_profie_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            tools:text="MD. Ebrahim" />
+
+        <TextView
+            android:id="@+id/st_profie_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            tools:text="ebrahim@gmail.com" />
+
+        <TextView
+            android:id="@+id/st_profie_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            tools:text="221-35-975" />
+
+        <TextView
+            android:id="@+id/st_profie_dept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            tools:text="SWE" />
+
+        <TextView
+            android:id="@+id/st_profie_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            tools:text="2nd semester" />
+
+        <TextView
+            android:id="@+id/st_profie_mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            tools:text="01749989506" />
+
+        <TextView
+            android:id="@+id/st_profie_parent_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            tools:text="01749989506" />
+
+        <TextView
+            android:id="@+id/st_profie_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            tools:text="Ashulia" />
+
+        <TextView
+            android:id="@+id/st_profie_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            tools:text="2000" />
+
+        <TextView
+            android:id="@+id/st_profie_register_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            tools:text="1/2/2022" />
+
+        <TextView
+            android:id="@+id/st_profie_updated_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            tools:text="2/2/2022" />
+
+    </LinearLayout>
+
+</ScrollView>

@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachingapp.R
-import com.example.teachingapp.ui.data.model.StudentDashBoardModel
-import com.example.teachingapp.ui.utils.StudentDashboardItemClickListener
+import com.example.teachingapp.data.model.datamodel.studentmodel.StudentDashBoardModel
+import com.example.teachingapp.utils.StudentDashboardItemClickListener
 
 class StudentDashboardAdapter :
     ListAdapter<StudentDashBoardModel, StudentDashboardAdapter.StudentDashboardViewHolder>(
@@ -60,15 +60,15 @@ class StudentDashboardAdapter :
     companion object {
         val DIFF_UTILS_CALL_BACK = object : DiffUtil.ItemCallback<StudentDashBoardModel>() {
             override fun areItemsTheSame(
-                oldItem: StudentDashBoardModel,
-                newItem: StudentDashBoardModel
+				oldItem: StudentDashBoardModel,
+				newItem: StudentDashBoardModel
             ): Boolean {
                 return oldItem.image == newItem.image && oldItem.title == newItem.title
             }
 
             override fun areContentsTheSame(
-                oldItem: StudentDashBoardModel,
-                newItem: StudentDashBoardModel
+				oldItem: StudentDashBoardModel,
+				newItem: StudentDashBoardModel
             ): Boolean {
                 return oldItem.image == newItem.image && oldItem.title == newItem.title
             }

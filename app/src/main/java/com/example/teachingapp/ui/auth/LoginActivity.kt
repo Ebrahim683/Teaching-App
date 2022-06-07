@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.teachingapp.R
 import com.example.teachingapp.ui.dashboard.studentdashboard.StudentDashboardActivity
-import com.example.teachingapp.ui.utils.SharedPrifUtils
+import com.example.teachingapp.utils.SharedPrifUtils
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 

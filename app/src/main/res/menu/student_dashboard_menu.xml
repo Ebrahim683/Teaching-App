@@ -25,6 +25,16 @@
            app:showAsAction="ifRoom" />
 
        <item
+           android:id="@+id/menu_all_users"
+           android:title="All Users"
+           app:showAsAction="ifRoom" />
+
+       <item
+           android:id="@+id/menu_all_students_result"
+           android:title="All Students Result"
+           app:showAsAction="ifRoom" />
+
+       <item
            android:id="@+id/menu_student_logout"
            android:title="Logout"
            app:showAsAction="ifRoom" />

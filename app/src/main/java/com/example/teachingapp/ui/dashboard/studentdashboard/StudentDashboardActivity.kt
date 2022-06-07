@@ -9,11 +9,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.teachingapp.R
+import com.example.teachingapp.data.model.datamodel.studentmodel.StudentDashBoardModel
 import com.example.teachingapp.ui.auth.LoginActivity
-import com.example.teachingapp.ui.data.model.StudentDashBoardModel
+import com.example.teachingapp.ui.course.CoursesActivity
 import com.example.teachingapp.ui.main.MainActivity
-import com.example.teachingapp.ui.utils.SharedPrifUtils
-import com.example.teachingapp.ui.utils.StudentDashboardItemClickListener
+import com.example.teachingapp.ui.profile.StudentProfileActivity
+import com.example.teachingapp.ui.result.AllStudentsResultActivity
+import com.example.teachingapp.ui.users.AllUsersActivity
+import com.example.teachingapp.utils.SharedPrifUtils
+import com.example.teachingapp.utils.StudentDashboardItemClickListener
 import kotlinx.android.synthetic.main.activity_student_dashboard.*
 
 private const val TAG = "studentDashboardActivity"
@@ -138,11 +142,11 @@ class StudentDashboardActivity : AppCompatActivity() {
 
 		when (item.itemId) {
 			R.id.menu_student_profile -> {
-				Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
+				startActivity(Intent(this, StudentProfileActivity::class.java))
 			}
 
 			R.id.menu_student_courses -> {
-				Toast.makeText(this, "Courses", Toast.LENGTH_SHORT).show()
+				startActivity(Intent(this, CoursesActivity::class.java))
 			}
 
 			R.id.menu_student_result -> {
@@ -153,13 +157,21 @@ class StudentDashboardActivity : AppCompatActivity() {
 				Toast.makeText(this, "Balance", Toast.LENGTH_SHORT).show()
 			}
 
+			R.id.menu_all_users -> {
+				startActivity(Intent(this, AllUsersActivity::class.java))
+			}
+
+			R.id.menu_all_students_result -> {
+				startActivity(Intent(this, AllStudentsResultActivity::class.java))
+			}
+
 			R.id.menu_student_logout -> {
 				sharedPrifUtils.logOut()
 				startActivity(Intent(this, LoginActivity::class.java))
 				finish()
 			}
-		}
 
+		}
 		return super.onOptionsItemSelected(item)
 	}
 

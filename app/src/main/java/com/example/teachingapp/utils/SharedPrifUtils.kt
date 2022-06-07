@@ -1,4 +1,4 @@
-package com.example.teachingapp.ui.utils
+package com.example.teachingapp.utils
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE

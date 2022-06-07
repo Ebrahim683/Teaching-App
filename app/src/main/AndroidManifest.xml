@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.teachingapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".Application"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,6 +16,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TeachingApp"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.result.AllStudentsResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.course.CoursesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.users.AllUsersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.TeacherProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.StudentProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.dashboard.studentdashboard.StudentDashboardActivity"
             android:exported="true"
