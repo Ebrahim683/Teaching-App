@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.balance.BalanceActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/text_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FB73B5">
+
+            <TextView
+                android:id="@+id/id_balance_hi_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                tools:text="Hi! EBrahim" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/id_balance_hi_text"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"
+                android:text="Explore Transaction History"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/id_balance_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                tools:text="143.53" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/id_balance_text"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="15dp"
+                android:text="Net Balance"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/id_balance_trans_last"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="Last Transaction History"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <RelativeLayout
+            android:id="@+id/l2"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_below="@id/id_balance_trans_last">
+
+            <TextView
+                android:id="@+id/id_sample_balance_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="#"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/id_sample_purpose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Payment Purpose"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/id_sample_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="Amount"
+                android:textColor="@color/black" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/v"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/l2"
+            android:background="@color/black"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/id_balance_rec"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_height="match_parent"
+            android:layout_below="@id/v" />
+
+    </RelativeLayout>
+
+</ScrollView>

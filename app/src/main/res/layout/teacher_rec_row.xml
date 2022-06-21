@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/st_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/sample_teacher_course_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        tools:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/sample_teacher_course_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        tools:text="English 1st paper" />
+
+    <TextView
+        android:id="@+id/sample_teacher_course_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        tools:text="English 1st paper" />
+
+    <TextView
+        android:id="@+id/sample_enrolled_st_list_for_teacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        tools:text="English 1st paper" />
+
+
+    <Button
+        android:id="@+id/btn_sample_teacher_dashboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See All Enrolled Students"
+        android:textAllCaps="false"
+        android:textSize="10sp" />
+
+</LinearLayout>

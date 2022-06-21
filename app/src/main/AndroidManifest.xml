@@ -17,6 +17,15 @@
         android:theme="@style/Theme.TeachingApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.balance.BalanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.result.ResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.UpdateProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.result.AllStudentsResultActivity"
             android:exported="false" />
         <activity
@@ -27,17 +36,20 @@
             android:exported="false" />
         <activity
             android:name=".ui.profile.TeacherProfileActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:label="My Profile" />
         <activity
             android:name=".ui.profile.StudentProfileActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:label="My Profile" />
         <activity
             android:name=".ui.dashboard.studentdashboard.StudentDashboardActivity"
             android:exported="true"
             android:label="Student Portal" />
         <activity
             android:name=".ui.dashboard.teacherdashboard.TeacherDashboardActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:label="Teacher's Portal"/>
         <activity
             android:name=".ui.auth.StudentRegisterActivity"
             android:exported="true"

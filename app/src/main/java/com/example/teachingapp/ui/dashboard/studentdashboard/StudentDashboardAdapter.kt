@@ -1,5 +1,6 @@
 package com.example.teachingapp.ui.dashboard.studentdashboard
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,71 +10,84 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachingapp.R
-import com.example.teachingapp.data.model.datamodel.studentmodel.StudentDashBoardModel
-import com.example.teachingapp.utils.StudentDashboardItemClickListener
+import com.example.teachingapp.data.model.datamodel.coursemodel.CoursesModel
+import com.example.teachingapp.utils.CourseItemCLickListener
+import com.squareup.picasso.Picasso
 
-class StudentDashboardAdapter :
-    ListAdapter<StudentDashBoardModel, StudentDashboardAdapter.StudentDashboardViewHolder>(
-        DIFF_UTILS_CALL_BACK
-    ) {
+class StudentDashboardAdapter() :
+	ListAdapter<CoursesModel, StudentDashboardAdapter.StudentDashboardViewHolder>(
+		DIFF_UTILS_CALL_BACK
+	) {
 
-    private var studentDashboardItemClickListener: StudentDashboardItemClickListener? = null
+	private var context: Context? = null
+	private var courseItemCLickListener: CourseItemCLickListener? = null
 
-    fun studentItemClick(studentDashboardItemClickListener: StudentDashboardItemClickListener) {
-        this.studentDashboardItemClickListener = studentDashboardItemClickListener
-    }
+	fun setContext(context: Context) {
+		this.context = context
+	}
 
-    class StudentDashboardViewHolder(
-        view: View,
-        var studentDashboardItemClickListener: StudentDashboardItemClickListener?
-    ) : RecyclerView.ViewHolder(view) {
-        val sample_st_rec_img: ImageView = view.findViewById(R.id.sample_st_rec_img)
-        val sample_st_rec_title: TextView = view.findViewById(R.id.sample_st_rec_title)
+	fun studentItemClick(courseItemCLickListener: CourseItemCLickListener) {
+		this.courseItemCLickListener = courseItemCLickListener
+	}
 
-        fun bind(studentDashBoardModel: StudentDashBoardModel) {
-            sample_st_rec_img.setImageResource(studentDashBoardModel.image!!.toInt())
-            sample_st_rec_title.text = studentDashBoardModel.title
+	class StudentDashboardViewHolder(
+		view: View,
+		var courseItemCLickListener: CourseItemCLickListener?,
+		var context: Context
+	) : RecyclerView.ViewHolder(view) {
+		val sample_st_rec_img: ImageView = view.findViewById(R.id.sample_st_rec_img)
+		val sample_st_rec_title: TextView = view.findViewById(R.id.sample_st_rec_title)
 
-            itemView.setOnClickListener {
-                if (RecyclerView.NO_POSITION != adapterPosition) {
-                    studentDashboardItemClickListener!!.onStudentItemClick(
-                        itemView,
-                        adapterPosition,
-                        studentDashBoardModel
-                    )
-                }
-            }
-        }
-    }
+		fun bind(coursesModel: CoursesModel) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentDashboardViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.student_rec_row, parent, false)
-        return StudentDashboardViewHolder(view, studentDashboardItemClickListener!!)
-    }
+			Picasso.get()
+				.load(coursesModel.courseImg)
+				.placeholder(R.drawable.loading)
+				.into(sample_st_rec_img);
 
-    override fun onBindViewHolder(holder: StudentDashboardViewHolder, position: Int) {
-        val studentDashBoardModel = getItem(position)
-        holder.bind(studentDashBoardModel)
-    }
+			sample_st_rec_title.text = coursesModel.courseTitle
 
-    companion object {
-        val DIFF_UTILS_CALL_BACK = object : DiffUtil.ItemCallback<StudentDashBoardModel>() {
-            override fun areItemsTheSame(
-				oldItem: StudentDashBoardModel,
-				newItem: StudentDashBoardModel
-            ): Boolean {
-                return oldItem.image == newItem.image && oldItem.title == newItem.title
-            }
+			itemView.setOnClickListener {
+				if (RecyclerView.NO_POSITION != adapterPosition) {
+					courseItemCLickListener!!.onStudentItemClick(
+						itemView,
+						adapterPosition,
+						coursesModel
+					)
+				}
+			}
+		}
+	}
 
-            override fun areContentsTheSame(
-				oldItem: StudentDashBoardModel,
-				newItem: StudentDashBoardModel
-            ): Boolean {
-                return oldItem.image == newItem.image && oldItem.title == newItem.title
-            }
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentDashboardViewHolder {
+		val view =
+			LayoutInflater.from(parent.context).inflate(R.layout.student_rec_row, parent, false)
+		return StudentDashboardViewHolder(view, courseItemCLickListener!!, context!!)
+	}
 
-        }
-    }
+	override fun onBindViewHolder(holder: StudentDashboardViewHolder, position: Int) {
+		val coursesModel = getItem(position)
+		holder.bind(coursesModel)
+	}
+
+	companion object {
+		val DIFF_UTILS_CALL_BACK = object : DiffUtil.ItemCallback<CoursesModel>() {
+			override fun areItemsTheSame(oldItem: CoursesModel, newItem: CoursesModel): Boolean {
+				return oldItem._id == newItem._id &&
+						oldItem.courseImg == newItem.courseImg &&
+						oldItem.courseTitle == newItem.courseTitle &&
+						oldItem.courseId == newItem.courseId
+			}
+
+			override fun areContentsTheSame(oldItem: CoursesModel, newItem: CoursesModel): Boolean {
+				return oldItem._id == newItem._id &&
+						oldItem.courseImg == newItem.courseImg &&
+						oldItem.courseTitle == newItem.courseTitle &&
+						oldItem.courseId == newItem.courseId
+			}
+
+
+		}
+	}
 
 }

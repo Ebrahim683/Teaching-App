@@ -1,26 +1,49 @@
 package com.example.teachingapp.data.local.remote
 
-import com.example.teachingapp.data.model.datamodel.coursemodel.CoursesModelItem
+import com.example.teachingapp.data.model.datamodel.coursemodel.CoursesModel
+import com.example.teachingapp.data.model.datamodel.response.RegistrationResponse
+import com.example.teachingapp.data.model.datamodel.response.UpdateProfileResponse
 import com.example.teachingapp.data.model.datamodel.resultmodel.AllStudentsResultModel
 import com.example.teachingapp.data.model.datamodel.resultmodel.SingleStudentResultModel
+import com.example.teachingapp.data.model.datamodel.studentmodel.StudentRegistrationModel
+import com.example.teachingapp.data.model.datamodel.teachermodel.TeacherCourseModel
+import com.example.teachingapp.data.model.datamodel.teachermodel.TeacherRegisterModel
+import com.example.teachingapp.data.model.datamodel.updateprofile.UpdateProfileModel
 import com.example.teachingapp.data.model.datamodel.usermodel.AllUsersModelItem
 import com.example.teachingapp.data.model.datamodel.usermodel.SingleUserModel
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Streaming
+import retrofit2.http.*
 
 interface ApiResponse {
+
+	@POST("/users")
+	suspend fun studentRegister(@Body studentRegistrationModel: StudentRegistrationModel): Response<RegistrationResponse>
+
+	@POST("/users")
+	suspend fun teacherRegister(@Body teacherRegisterModel: TeacherRegisterModel): Response<RegistrationResponse>
 
 	@GET("/users/{email}")
 	@Streaming
 	suspend fun getSingleUser(@Path("email") email: String): Response<SingleUserModel>
 
+	@PUT("/users/{email}")
+	@Streaming
+	suspend fun updateSingleUser(
+		@Path("email") email: String,
+		@Body updateProfileModel: UpdateProfileModel
+	): Response<UpdateProfileResponse>
+
 	@GET("/users")
 	suspend fun getAllUsers(): Response<List<AllUsersModelItem>>
 
+	@GET("/courses/{email}")
+	suspend fun showEnrollCourses(@Path("email") email: String): Response<List<CoursesModel>>
+
+	@GET("/courses/{courseId}")
+	suspend fun showTeacherCourses(@Path("courseId") courseId: String): Response<TeacherCourseModel>
+
 	@GET("/courses")
-	suspend fun showCourses(): Response<List<CoursesModelItem>>
+	suspend fun showCourses(): Response<List<CoursesModel>>
 
 	@GET("/results")
 	suspend fun getAllStudentsResult(): Response<List<AllStudentsResultModel>>

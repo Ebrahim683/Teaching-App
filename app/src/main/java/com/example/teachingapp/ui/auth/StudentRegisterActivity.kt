@@ -1,21 +1,27 @@
 package com.example.teachingapp.ui.auth
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.asLiveData
+import com.example.teachingapp.Application
 import com.example.teachingapp.R
 import com.example.teachingapp.data.model.datamodel.studentmodel.StudentRegistrationModel
-import com.example.teachingapp.ui.dashboard.studentdashboard.StudentDashboardActivity
+import com.example.teachingapp.data.model.viewmodel.MainViewModel
+import com.example.teachingapp.data.model.viewmodel.ViewModelFactory
+import com.example.teachingapp.utils.OverLayLoadingManager
+import com.example.teachingapp.utils.Status
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_student_register.*
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 
 private const val TAG = "studentRegisterActivity"
-private const val role = "Student"
+private const val role = "student"
 
 class StudentRegisterActivity : AppCompatActivity() {
 
@@ -23,6 +29,7 @@ class StudentRegisterActivity : AppCompatActivity() {
 	private lateinit var name: String
 	private lateinit var email: String
 	private lateinit var password: String
+	private lateinit var confirmPassword: String
 	private lateinit var level: String
 	private lateinit var id: String
 	private lateinit var dept: String
@@ -32,10 +39,17 @@ class StudentRegisterActivity : AppCompatActivity() {
 	private lateinit var balance: String
 	private lateinit var registerDate: String
 	private lateinit var updated_date: String
+	private lateinit var overLayLoadingManager: OverLayLoadingManager
+
+	private val studentRegistrationModel by viewModels<MainViewModel> {
+		ViewModelFactory((application as Application).repository)
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_student_register)
+
+		overLayLoadingManager = OverLayLoadingManager(this)
 
 		val calendar = Calendar.getInstance(Locale.getDefault())
 		val date = calendar.get(Calendar.DATE)
@@ -53,7 +67,7 @@ class StudentRegisterActivity : AppCompatActivity() {
 		}
 
 		id_btn_student_register.setOnClickListener {
-			createStudentAccount()
+				createStudentAccount()
 		}
 
 	}
@@ -63,6 +77,7 @@ class StudentRegisterActivity : AppCompatActivity() {
 		name = id_name.editText!!.text.toString()
 		email = id_email.editText!!.text.toString().trim()
 		password = id_password.editText!!.text.toString().trim()
+		confirmPassword = id_confirm_password.editText!!.text.toString().trim()
 		level = id_level.editText!!.text.toString()
 		id = id_user_id.editText!!.text.toString().trim()
 		dept = id_dept.editText!!.text.toString()
@@ -96,37 +111,66 @@ class StudentRegisterActivity : AppCompatActivity() {
 		} else if (id_confirm_password.editText!!.text.toString() != password) {
 			id_confirm_password.editText!!.error = "Password doesn't match"
 		} else {
-
-			val alertDialog = AlertDialog.Builder(this)
-				.setMessage("Creating account...")
-				.setCancelable(false)
-				.show()
-
 			sAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
 
 				if (task.isSuccessful) {
-					val data = task.result.user
 					val studentRegisterModel = StudentRegistrationModel(
-						adress = address,
-						balance = balance.toInt(),
-						cardno = id,
-						dept = dept,
+						role = role,
+						id = id,
+						name = name,
 						email = email,
-						gardian_phone = parentsContact,
+						dept = dept,
 						level = level,
 						mobile = mobile,
-						name = name,
-						regester_date = registerDate,
-						role = role,
-						updated_at = updated_date
+						address = address,
+						balance = balance,
+						password = password,
+						confirmPass = confirmPassword,
+						date = registerDate,
 					)
-					saveDataInDatabase(studentRegisterModel = studentRegisterModel)
-					Log.d(TAG, "createStudentAccount: ${data!!.email}")
-					alertDialog.dismiss()
-					startActivity(Intent(this, StudentDashboardActivity::class.java))
-					finishAffinity()
+
+					studentRegistrationModel.studentRegister(studentRegisterModel).asLiveData()
+						.observe(this) {
+							Log.d(
+								TAG,
+								"createStudentAccount: student registration response ${it.status}"
+							)
+
+							when (it.status) {
+								Status.LOADING -> {
+									overLayLoadingManager.show()
+								}
+								Status.SUCCESS -> {
+									overLayLoadingManager.dismiss()
+									val response = it.data?.acknowledged
+									if (response == true) {
+										Log.d(
+											TAG,
+											"createStudentAccount: $response \n${it.data.insertedId}"
+										)
+										startActivity(Intent(this, LoginActivity::class.java))
+										finishAffinity()
+									} else {
+										Log.d(TAG, "createStudentAccount: ${it.data?.acknowledged}")
+									}
+
+								}
+								Status.ERROR -> {
+									overLayLoadingManager.dismiss()
+									Log.d(TAG, "createStudentAccount: ${it.message}")
+									Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
+								}
+								null -> {
+									overLayLoadingManager.dismiss()
+									Log.d(TAG, "createStudentAccount: null!!!")
+									Toast.makeText(this, "null!!!", Toast.LENGTH_SHORT).show()
+								}
+							}
+
+						}
+
 				} else {
-					alertDialog.dismiss()
+					overLayLoadingManager.dismiss()
 					Toast.makeText(this, "${task.exception?.localizedMessage}", Toast.LENGTH_SHORT)
 						.show()
 					Log.d(TAG, "createStudentAccount: ${task.exception?.localizedMessage}")
@@ -136,7 +180,4 @@ class StudentRegisterActivity : AppCompatActivity() {
 
 	}
 
-	private fun saveDataInDatabase(studentRegisterModel: StudentRegistrationModel) {
-		Log.d(TAG, "saveDataInDatabase: ${studentRegisterModel.regester_date}")
-	}
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_below="@id/id_balance_trans_last"
+    android:layout_marginTop="5dp"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/id_sample_balance_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        tools:text="1"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/id_sample_purpose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        tools:text="Tuition Fee"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/id_sample_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        tools:text="1200"
+        android:textColor="@color/black" />
+
+</RelativeLayout>

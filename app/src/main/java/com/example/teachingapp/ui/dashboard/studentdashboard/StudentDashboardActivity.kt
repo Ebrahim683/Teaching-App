@@ -2,34 +2,49 @@ package com.example.teachingapp.ui.dashboard.studentdashboard
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.teachingapp.Application
 import com.example.teachingapp.R
-import com.example.teachingapp.data.model.datamodel.studentmodel.StudentDashBoardModel
+import com.example.teachingapp.data.model.datamodel.coursemodel.CoursesModel
+import com.example.teachingapp.data.model.datamodel.teachermodel.TeacherCourseModel
+import com.example.teachingapp.data.model.viewmodel.MainViewModel
+import com.example.teachingapp.data.model.viewmodel.ViewModelFactory
 import com.example.teachingapp.ui.auth.LoginActivity
+import com.example.teachingapp.ui.balance.BalanceActivity
 import com.example.teachingapp.ui.course.CoursesActivity
 import com.example.teachingapp.ui.main.MainActivity
 import com.example.teachingapp.ui.profile.StudentProfileActivity
 import com.example.teachingapp.ui.result.AllStudentsResultActivity
-import com.example.teachingapp.ui.users.AllUsersActivity
+import com.example.teachingapp.ui.result.ResultActivity
+import com.example.teachingapp.utils.CourseItemCLickListener
+import com.example.teachingapp.utils.OverLayLoadingManager
 import com.example.teachingapp.utils.SharedPrifUtils
-import com.example.teachingapp.utils.StudentDashboardItemClickListener
+import com.example.teachingapp.utils.Status
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_student_dashboard.*
 
 private const val TAG = "studentDashboardActivity"
 
 class StudentDashboardActivity : AppCompatActivity() {
 
-	private var name: String? = "N/A"
-	private var totalPaid: String? = "1432.32"
-	private var balance: String? = "1400.12"
 	private lateinit var sharedPrifUtils: SharedPrifUtils
 	private lateinit var studentDashboardAdapter: StudentDashboardAdapter
-	private lateinit var studentArrayList: ArrayList<StudentDashBoardModel>
+	private lateinit var studentArrayList: ArrayList<CoursesModel>
+	private lateinit var overLayLoadingManager: OverLayLoadingManager
+	private lateinit var auth: FirebaseAuth
+	private lateinit var email: String
+
+	private val studentDashboardViewModel by viewModels<MainViewModel> {
+		ViewModelFactory((application as Application).repository)
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -40,73 +55,62 @@ class StudentDashboardActivity : AppCompatActivity() {
 		sharedPrifUtils = SharedPrifUtils(this)
 		studentArrayList = ArrayList()
 		studentDashboardAdapter = StudentDashboardAdapter()
+		studentDashboardAdapter.setContext(this)
+		auth = FirebaseAuth.getInstance()
+		email = auth.currentUser?.email.toString()
 
-		id_welcome_text.text = "WELCOME BACK! $name"
-		btn_total_paid.text = "Total Paid\n$totalPaid"
-		btn_balance.text = "Total Paid\n$balance"
+		overLayLoadingManager = OverLayLoadingManager(this)
+		getUserProfile(email)
+//		getEnrolledCourses(email)
+
+		id_welcome_text.text = "WELCOME BACK! "
+		btn_total_paid.text = "Total Paid"
+		btn_balance.text = "Total Balance"
 
 		setUpView()
 
 	}
 
-	fun setUpView() {
+	private fun setUpView() {
 		studentArrayList.add(
-			StudentDashBoardModel(
-				R.drawable.img_english.toString(), "English 1st paper"
+			CoursesModel(
+				courseImg = R.drawable.img_english.toString(),
+				courseTitle = "English 1st paper"
 			)
 		)
 
 		studentArrayList.add(
-			StudentDashBoardModel(
-				R.drawable.img_english.toString(), "English 2nd paper"
+			CoursesModel(
+				courseImg = R.drawable.img_english.toString(),
+				courseTitle = "English 2nd paper"
 			)
 		)
 
 		studentArrayList.add(
-			StudentDashBoardModel(
-				R.drawable.img_english.toString(), "English 3rd paper"
+			CoursesModel(
+				courseImg = R.drawable.img_english.toString(),
+				courseTitle = "English 3rd paper"
 			)
 		)
 
 		studentArrayList.add(
-			StudentDashBoardModel(
-				R.drawable.img_english.toString(), "English 4th paper"
+			CoursesModel(
+				courseImg = R.drawable.img_english.toString(),
+				courseTitle = "English 4th paper"
 			)
 		)
 
 		studentArrayList.add(
-			StudentDashBoardModel(
-				R.drawable.img_english.toString(), "English 5th paper"
+			CoursesModel(
+				courseImg = R.drawable.img_english.toString(),
+				courseTitle = "English 5th paper"
 			)
 		)
 
 		studentArrayList.add(
-			StudentDashBoardModel(
-				R.drawable.img_english.toString(), "English 6th paper"
-			)
-		)
-
-		studentArrayList.add(
-			StudentDashBoardModel(
-				R.drawable.img_english.toString(), "English 7th paper"
-			)
-		)
-
-		studentArrayList.add(
-			StudentDashBoardModel(
-				R.drawable.img_english.toString(), "English 8th paper"
-			)
-		)
-
-		studentArrayList.add(
-			StudentDashBoardModel(
-				R.drawable.img_english.toString(), "English 9th paper"
-			)
-		)
-
-		studentArrayList.add(
-			StudentDashBoardModel(
-				R.drawable.img_english.toString(), "English 10th paper"
+			CoursesModel(
+				courseImg = R.drawable.img_english.toString(),
+				courseTitle = "English 6th paper"
 			)
 		)
 
@@ -118,18 +122,23 @@ class StudentDashboardActivity : AppCompatActivity() {
 			adapter = studentDashboardAdapter
 		}
 
-		studentDashboardAdapter.studentItemClick(object : StudentDashboardItemClickListener {
-			override fun onStudentItemClick(
-				view: View,
-				position: Int,
-				studentDashBoardModel: StudentDashBoardModel
-			) {
+		studentDashboardAdapter.studentItemClick(object : CourseItemCLickListener {
+			override fun onStudentItemClick(view: View, position: Int, coursesModel: CoursesModel) {
 				val intent = Intent(this@StudentDashboardActivity, MainActivity::class.java)
 				intent.apply {
-					putExtra("title", studentDashBoardModel.title)
+					putExtra("title", coursesModel.courseTitle)
 				}
 				startActivity(intent)
 			}
+
+			override fun onTeacherItemClick(
+				view: View,
+				position: Int,
+				teacherCourseModel: TeacherCourseModel
+			) {
+
+			}
+
 		})
 	}
 
@@ -150,16 +159,20 @@ class StudentDashboardActivity : AppCompatActivity() {
 			}
 
 			R.id.menu_student_result -> {
-				Toast.makeText(this, "Result", Toast.LENGTH_SHORT).show()
+				val intent = Intent(this, ResultActivity::class.java)
+				intent.apply {
+					putExtra("email", email)
+				}
+				startActivity(intent)
 			}
 
 			R.id.menu_student_balance -> {
-				Toast.makeText(this, "Balance", Toast.LENGTH_SHORT).show()
+				startActivity(Intent(this, BalanceActivity::class.java))
 			}
 
-			R.id.menu_all_users -> {
-				startActivity(Intent(this, AllUsersActivity::class.java))
-			}
+//			R.id.menu_all_users -> {
+//				startActivity(Intent(this, AllUsersActivity::class.java))
+//			}
 
 			R.id.menu_all_students_result -> {
 				startActivity(Intent(this, AllStudentsResultActivity::class.java))
@@ -173,6 +186,85 @@ class StudentDashboardActivity : AppCompatActivity() {
 
 		}
 		return super.onOptionsItemSelected(item)
+	}
+
+	private fun getUserProfile(email: String) {
+		studentDashboardViewModel.getSingleUser(email).asLiveData()
+			.observe(this) {
+				Log.d(TAG, "getUserProfile: get user profile response: ${it.status}")
+				when (it.status) {
+					Status.LOADING -> {
+						overLayLoadingManager.show()
+					}
+					Status.SUCCESS -> {
+						overLayLoadingManager.dismiss()
+						val value = it.data
+						id_name_text.text = it.data?.name ?: "Student"
+						btn_total_paid.text = "Total Paid\n1432.32"
+						btn_balance.text = "Total Balance\n${value?.balance}"
+						Log.d(TAG, "getUserProfile: success: $value")
+					}
+					Status.ERROR -> {
+						overLayLoadingManager.dismiss()
+						Log.d(TAG, "getUserProfile: error: ${it.message}")
+					}
+					null -> {
+						overLayLoadingManager.dismiss()
+						Log.d(TAG, "getUserProfile: null!!!")
+					}
+				}
+			}
+	}
+
+
+	private fun getEnrolledCourses(email: String) {
+		studentDashboardViewModel.showEnrolledCourses(email).asLiveData().observe(this) {
+			Log.d(TAG, "getEnrolledCourses: enrolled courses response ${it.status}")
+
+			when (it.status) {
+				Status.LOADING -> {
+					overLayLoadingManager.show()
+				}
+				Status.SUCCESS -> {
+					overLayLoadingManager.dismiss()
+					val data = it.data
+					Log.d(TAG, "getEnrolledCourses: $data")
+					studentDashboardAdapter.submitList(data)
+					studentDashboardAdapter.notifyDataSetChanged()
+
+					studentDashboardAdapter.studentItemClick(object : CourseItemCLickListener {
+						override fun onStudentItemClick(
+							view: View,
+							position: Int,
+							coursesModel: CoursesModel
+						) {
+							val intent =
+								Intent(this@StudentDashboardActivity, MainActivity::class.java)
+							intent.apply {
+								putExtra("title", coursesModel.courseTitle)
+							}
+							startActivity(intent)
+						}
+
+						override fun onTeacherItemClick(
+							view: View,
+							position: Int,
+							teacherCourseModel: TeacherCourseModel
+						) {
+
+						}
+
+					})
+				}
+				Status.ERROR -> {
+					overLayLoadingManager.dismiss()
+					Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
+				}
+				null -> {
+					overLayLoadingManager.dismiss()
+				}
+			}
+		}
 	}
 
 }

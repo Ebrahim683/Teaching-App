@@ -5,122 +5,224 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.StudentProfileActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp">
 
-        <TextView
-            android:id="@+id/st_profie_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            tools:text="MD. Ebrahim" />
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:src="@drawable/avatar"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
 
         <TextView
-            android:id="@+id/st_profie_email"
+            android:id="@+id/id_profile_name_top"
+            style="@style/Theme.Material3.DayNight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/profile_image"
+            android:layout_centerHorizontal="true"
             android:layout_margin="5dp"
-            android:padding="5dp"
             android:textColor="@color/black"
-            android:textSize="15sp"
-            tools:text="ebrahim@gmail.com" />
+            android:textSize="20sp"
+            tools:text="MD. Ebrahim Rahman" />
 
-        <TextView
-            android:id="@+id/st_profie_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            tools:text="221-35-975" />
+        <LinearLayout
+            android:id="@+id/layout_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/id_profile_name_top"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/st_profie_dept"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            tools:text="SWE" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-        <TextView
-            android:id="@+id/st_profie_level"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            tools:text="2nd semester" />
+                <TextView
+                    style="@style/Theme.Material3.DayNight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Id: "
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/st_profie_mobile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            tools:text="01749989506" />
+                <TextView
+                    android:id="@+id/profile_user_id"
+                    style="@style/Theme.Material3.DayNight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textSize="15sp"
+                    tools:text="221-35-975" />
 
-        <TextView
-            android:id="@+id/st_profie_parent_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            tools:text="01749989506" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/st_profie_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            tools:text="Ashulia" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-        <TextView
-            android:id="@+id/st_profie_balance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            tools:text="2000" />
+                <TextView
+                    style="@style/Theme.Material3.DayNight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name: "
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/st_profie_register_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            tools:text="1/2/2022" />
+                <TextView
+                    android:id="@+id/id_profile_name"
+                    style="@style/Theme.Material3.DayNight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textSize="15sp"
+                    tools:text="MD. Ebrahim Rahman" />
 
-        <TextView
-            android:id="@+id/st_profie_updated_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            tools:text="2/2/2022" />
+            </LinearLayout>
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    style="@style/Theme.Material3.DayNight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email: "
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/id_profile_email"
+                    style="@style/Theme.Material3.DayNight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textSize="15sp"
+                    tools:text="ebrahim@gmail.com" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    style="@style/Theme.Material3.DayNight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Department: "
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/id_profile_department"
+                    style="@style/Theme.Material3.DayNight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textSize="15sp"
+                    tools:text="SWE" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    style="@style/Theme.Material3.DayNight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mobile: "
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/id_profile_mobile"
+                    style="@style/Theme.Material3.DayNight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textSize="15sp"
+                    tools:text="01712345678" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    style="@style/Theme.Material3.DayNight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address: "
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/id_profile_address"
+                    style="@style/Theme.Material3.DayNight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textSize="15sp"
+                    tools:text="Ashulia,Savar,Dhaka" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/id_btn_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:backgroundTint="#FB73B5"
+                android:text="Update"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+
+<!--        <TextView-->
+<!--            android:id="@+id/id_join_date"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/layout_text"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:background="@drawable/bg_profile_textview"-->
+<!--            android:padding="5dp"-->
+<!--            android:text="Joining Date: "-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="20sp" />-->
+
+    </RelativeLayout>
 
 </ScrollView>
