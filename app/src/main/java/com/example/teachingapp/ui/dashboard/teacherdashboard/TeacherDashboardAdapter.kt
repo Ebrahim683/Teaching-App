@@ -6,26 +6,42 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.compose.ui.layout.Layout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachingapp.R
 import com.example.teachingapp.data.model.datamodel.teachermodel.TeacherCourseModel
+import com.example.teachingapp.utils.CourseItemCLickListener
 import com.squareup.picasso.Picasso
 
-class TeacherDashboardAdapter:
+class TeacherDashboardAdapter :
 	ListAdapter<TeacherCourseModel, TeacherDashboardAdapter.TeacherDashboardViewHolder>(
-		DIFF_UTIL_CALL_BACK) {
-	class TeacherDashboardViewHolder(view:View):RecyclerView.ViewHolder(view) {
+		DIFF_UTIL_CALL_BACK
+	) {
 
-		val sample_teacher_course_image:ImageView = view.findViewById(R.id.sample_teacher_course_image)
-		val sample_teacher_course_title:TextView = view.findViewById(R.id.sample_teacher_course_title)
-		val sample_teacher_course_id:TextView = view.findViewById(R.id.sample_teacher_course_id)
-		val sample_enrolled_st_list_for_teacher:TextView = view.findViewById(R.id.sample_enrolled_st_list_for_teacher)
-		val btn_sample_teacher_dashboard:Button = view.findViewById(R.id.btn_sample_teacher_dashboard)
+	var courseItemCLickListener: CourseItemCLickListener? = null
+	fun teacherCourseItemClick(courseItemCLickListener: CourseItemCLickListener) {
+		this.courseItemCLickListener = courseItemCLickListener
+	}
 
-		fun bind(teacherCourseModel: TeacherCourseModel){
+	class TeacherDashboardViewHolder(
+		view: View,
+		var courseItemCLickListener: CourseItemCLickListener
+	) : RecyclerView.ViewHolder(view) {
+
+		val sample_teacher_course_image: ImageView =
+			view.findViewById(R.id.sample_teacher_course_image)
+		val sample_teacher_course_title: TextView =
+			view.findViewById(R.id.sample_teacher_course_title)
+		val sample_teacher_course_id: TextView = view.findViewById(R.id.sample_teacher_course_id)
+		val sample_enrolled_st_list_for_teacher: TextView =
+			view.findViewById(R.id.sample_enrolled_st_list_for_teacher)
+		val btn_sample_teacher_dashboard: Button =
+			view.findViewById(R.id.btn_sample_teacher_dashboard)
+		val btn_sample_teacher_dashboard_att: Button =
+			view.findViewById(R.id.btn_sample_teacher_dashboard_att)
+
+		fun bind(teacherCourseModel: TeacherCourseModel) {
 			sample_teacher_course_id.text = teacherCourseModel.courseId
 			sample_teacher_course_title.text = teacherCourseModel.courseTitle
 			sample_enrolled_st_list_for_teacher.text = teacherCourseModel.studentList.toString()
@@ -33,11 +49,31 @@ class TeacherDashboardAdapter:
 				.load(teacherCourseModel.courseImg)
 				.placeholder(R.drawable.loading)
 				.into(sample_teacher_course_image)
+
+			btn_sample_teacher_dashboard.setOnClickListener {
+				if (RecyclerView.NO_POSITION != adapterPosition) {
+					courseItemCLickListener.onTeacherItemClick(
+						itemView,
+						adapterPosition,
+						teacherCourseModel
+					)
+				}
+			}
+
+			btn_sample_teacher_dashboard_att.setOnClickListener {
+				if (RecyclerView.NO_POSITION != adapterPosition) {
+					courseItemCLickListener.onAttendanceItemClick(
+						itemView,
+						adapterPosition,
+						teacherCourseModel
+					)
+				}
+			}
 		}
 
 	}
 
-	companion object{
+	companion object {
 		val DIFF_UTIL_CALL_BACK = object : DiffUtil.ItemCallback<TeacherCourseModel>() {
 			override fun areItemsTheSame(
 				oldItem: TeacherCourseModel,
@@ -65,8 +101,9 @@ class TeacherDashboardAdapter:
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeacherDashboardViewHolder {
-		val view = LayoutInflater.from(parent.context).inflate(R.layout.teacher_rec_row,parent,false)
-		return TeacherDashboardViewHolder(view)
+		val view =
+			LayoutInflater.from(parent.context).inflate(R.layout.teacher_rec_row, parent, false)
+		return TeacherDashboardViewHolder(view, courseItemCLickListener!!)
 	}
 
 	override fun onBindViewHolder(holder: TeacherDashboardViewHolder, position: Int) {

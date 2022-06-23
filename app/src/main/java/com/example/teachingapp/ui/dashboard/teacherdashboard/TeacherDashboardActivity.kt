@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,15 +14,19 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachingapp.Application
 import com.example.teachingapp.R
+import com.example.teachingapp.data.model.datamodel.coursemodel.CoursesModel
 import com.example.teachingapp.data.model.datamodel.teachermodel.TeacherCourseModel
 import com.example.teachingapp.data.model.viewmodel.MainViewModel
 import com.example.teachingapp.data.model.viewmodel.ViewModelFactory
+import com.example.teachingapp.ui.attendance.AttendanceCourseIdActivity
 import com.example.teachingapp.ui.auth.LoginActivity
 import com.example.teachingapp.ui.balance.BalanceActivity
 import com.example.teachingapp.ui.course.CoursesActivity
+import com.example.teachingapp.ui.coursedetails.TeacherCourseDetailsActivity
 import com.example.teachingapp.ui.profile.StudentProfileActivity
 import com.example.teachingapp.ui.result.AllStudentsResultActivity
 import com.example.teachingapp.ui.result.ResultActivity
+import com.example.teachingapp.utils.CourseItemCLickListener
 import com.example.teachingapp.utils.OverLayLoadingManager
 import com.example.teachingapp.utils.SharedPrifUtils
 import com.example.teachingapp.utils.Status
@@ -63,61 +68,6 @@ class TeacherDashboardActivity : AppCompatActivity() {
 		btn_teacher_total_paid.text = "Total Paid"
 		btn_teacher_balance.text = "Total Balance"
 
-		teacherArrayList.add(
-			TeacherCourseModel(
-				"486464785",
-				"SE111",
-				"Database",
-				"${R.drawable.img_english}",
-				listOf("Ada", "adfs")
-			)
-		)
-
-		teacherArrayList.add(
-			TeacherCourseModel(
-				"486464785",
-				"SE111",
-				"Database",
-				"${R.drawable.img_english}",
-				listOf("Ada", "adfs")
-			)
-		)
-
-		teacherArrayList.add(
-			TeacherCourseModel(
-				"486464785",
-				"SE111",
-				"Database",
-				"${R.drawable.img_english}",
-				listOf("Ada", "adfs")
-			)
-		)
-
-		teacherArrayList.add(
-			TeacherCourseModel(
-				"486464785",
-				"SE111",
-				"Database",
-				"${R.drawable.img_english}",
-				listOf("Ada", "adfs")
-			)
-		)
-
-		teacherArrayList.add(
-			TeacherCourseModel(
-				"486464785",
-				"SE111",
-				"Database",
-				"${R.drawable.img_english}",
-				listOf("Ada", "adfs")
-			)
-		)
-		teacherDashboardAdapter.submitList(teacherArrayList)
-		recyclerView.apply {
-			setHasFixedSize(true)
-			layoutManager = GridLayoutManager(this@TeacherDashboardActivity, 2)
-			adapter = teacherDashboardAdapter
-		}
 		getUserProfile(email)
 	}
 
@@ -182,8 +132,12 @@ class TeacherDashboardActivity : AppCompatActivity() {
 						id_teacher_name_text.text = it.data?.name ?: "Teacher"
 						btn_teacher_total_paid.text = "Total Paid\n1432.32"
 						btn_teacher_balance.text = "Total Balance\n${value?.balance}"
-						getTeacherCourses("SE111")
 						Log.d(TAG, "getUserProfile: success: $value")
+
+						val courses = value?.courses
+						for (i in 0..courses?.size!!) {
+							getTeacherCourses("${courses[i]}")
+						}
 					}
 					Status.ERROR -> {
 						overLayLoadingManager.dismiss()
@@ -199,7 +153,7 @@ class TeacherDashboardActivity : AppCompatActivity() {
 
 	private fun getTeacherCourses(courseId: String) {
 		teacherDashboardViewModel.showTeacherCourses(courseId).asLiveData().observe(this) { it ->
-			Log.d(TAG, "getEnrolledCourses: teacher courses response ${it.status}")
+			Log.d(TAG, "getTeacherCourses: teacher courses response ${it.status}")
 
 			when (it.status) {
 				Status.LOADING -> {
@@ -208,8 +162,68 @@ class TeacherDashboardActivity : AppCompatActivity() {
 				Status.SUCCESS -> {
 					overLayLoadingManager.dismiss()
 					val data = it.data
-//					teacherDashboardAdapter.submitList(data)
+
+					teacherArrayList.add(
+						TeacherCourseModel(
+							data?._id,
+							data?.courseId,
+							data?.courseTitle,
+							data?.courseImg,
+							data?.studentList
+						)
+					)
+					teacherDashboardAdapter.submitList(teacherArrayList)
 					teacherDashboardAdapter.notifyDataSetChanged()
+					recyclerView.apply {
+						setHasFixedSize(true)
+						layoutManager = GridLayoutManager(this@TeacherDashboardActivity, 2)
+						adapter = teacherDashboardAdapter
+					}
+
+					teacherDashboardAdapter.teacherCourseItemClick(object :
+						CourseItemCLickListener {
+						override fun onStudentItemClick(
+							view: View,
+							position: Int,
+							coursesModel: CoursesModel
+						) {
+
+						}
+
+						override fun onTeacherItemClick(
+							view: View,
+							position: Int,
+							teacherCourseModel: TeacherCourseModel
+						) {
+							val intent = Intent(
+								this@TeacherDashboardActivity,
+								TeacherCourseDetailsActivity::class.java
+							)
+							intent.apply {
+								putStringArrayListExtra(
+									"studentList",
+									teacherCourseModel.studentList as java.util.ArrayList<String>
+								)
+								putExtra("courseID", teacherCourseModel.courseId)
+								putExtra("courseTitle", teacherCourseModel.courseTitle)
+							}
+							startActivity(intent)
+						}
+
+						override fun onAttendanceItemClick(
+							view: View,
+							position: Int,
+							teacherCourseModel: TeacherCourseModel
+						) {
+							val intent = Intent(
+								this@TeacherDashboardActivity,
+								AttendanceCourseIdActivity::class.java
+							)
+							intent.putExtra("courseId", teacherCourseModel.courseId)
+							startActivity(intent)
+						}
+					})
+
 					Log.d(TAG, "getTeacherCourses: $data")
 				}
 				Status.ERROR -> {

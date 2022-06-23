@@ -1,6 +1,5 @@
 package com.example.teachingapp.ui.auth
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +12,6 @@ import com.example.teachingapp.R
 import com.example.teachingapp.data.model.datamodel.teachermodel.TeacherRegisterModel
 import com.example.teachingapp.data.model.viewmodel.MainViewModel
 import com.example.teachingapp.data.model.viewmodel.ViewModelFactory
-import com.example.teachingapp.ui.dashboard.teacherdashboard.TeacherDashboardActivity
 import com.example.teachingapp.utils.OverLayLoadingManager
 import com.example.teachingapp.utils.Status
 import com.google.firebase.auth.FirebaseAuth
@@ -28,7 +26,6 @@ import kotlinx.android.synthetic.main.activity_teacher_register.id_confirm_passw
 import kotlinx.android.synthetic.main.activity_teacher_register.id_email
 import kotlinx.android.synthetic.main.activity_teacher_register.id_name
 import kotlinx.android.synthetic.main.activity_teacher_register.id_password
-import kotlinx.coroutines.runBlocking
 import java.util.*
 
 
@@ -48,6 +45,7 @@ class TeacherRegisterActivity : AppCompatActivity() {
 	private lateinit var address: String
 	private lateinit var balance: String
 	private lateinit var registerDate: String
+	private lateinit var courseList: ArrayList<String>
 
 	private lateinit var overLayLoadingManager: OverLayLoadingManager
 
@@ -60,6 +58,7 @@ class TeacherRegisterActivity : AppCompatActivity() {
 		setContentView(R.layout.activity_teacher_register)
 
 		overLayLoadingManager = OverLayLoadingManager(this)
+		courseList = ArrayList()
 
 		val calendar = Calendar.getInstance(Locale.getDefault())
 		val date = calendar.get(Calendar.DATE)
@@ -68,15 +67,13 @@ class TeacherRegisterActivity : AppCompatActivity() {
 		registerDate = "$date/$month/$year"
 		Log.d(TAG, "onCreate: $registerDate")
 
-
-
 		id_tv_login.setOnClickListener {
 			startActivity(Intent(this, LoginActivity::class.java))
 			finish()
 		}
 
 		id_btn_teacher_register.setOnClickListener {
-				createTeacherAccount()
+			createTeacherAccount()
 		}
 
 	}
@@ -92,8 +89,9 @@ class TeacherRegisterActivity : AppCompatActivity() {
 		mobile = id_mobile.editText!!.text.toString().trim()
 		address = id_address.editText!!.text.toString()
 		balance = id_balance.editText!!.text.toString().trim()
-		val courses = listOf(id_courses.editText!!.text.toString().trim())
-		Log.d(TAG, "onCreate: $courses")
+		val courses = arrayListOf<String>(id_courses.editText?.text.toString())
+		courseList.addAll(courses)
+		Log.d(TAG, "onCreate: courses: $courseList \ncourses count: ${courseList.size}")
 
 		if (name.isEmpty()) {
 			id_name.editText!!.error = "Enter name"
@@ -127,7 +125,6 @@ class TeacherRegisterActivity : AppCompatActivity() {
 
 				if (task.isSuccessful) {
 					val teacherRegisterModel = TeacherRegisterModel(
-						_id = "629f0493462f89a26decdc91",
 						id = id,
 						role = role,
 						name = name,
@@ -164,10 +161,12 @@ class TeacherRegisterActivity : AppCompatActivity() {
 
 								}
 								Status.ERROR -> {
+									overLayLoadingManager.dismiss()
 									Log.d(TAG, "createTeacherAccount: ${it.message}")
 									Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
 								}
 								null -> {
+									overLayLoadingManager.dismiss()
 									Log.d(TAG, "createTeacherAccount: null!!!")
 									Toast.makeText(this, "null!!!", Toast.LENGTH_SHORT).show()
 								}

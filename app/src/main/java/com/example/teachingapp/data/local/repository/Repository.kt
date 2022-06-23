@@ -25,10 +25,12 @@ class Repository {
 	suspend fun showCourses() = ApiBuilder.getApiService().showCourses()
 
 	//for get enrolled courses
-	suspend fun showEnrolledCourses(email:String) = ApiBuilder.getApiService().showEnrollCourses(email)
+	suspend fun showEnrolledCourses(courseCode: String) =
+		ApiBuilder.getApiService().showEnrollCourses(courseCode)
 
 	//for get teachers courses
-	suspend fun showTeacherCourses(value:String) = ApiBuilder.getApiService().showTeacherCourses(value)
+	suspend fun showTeacherCourses(value: String) =
+		ApiBuilder.getApiService().showTeacherCourses(value)
 
 	//for get all students result
 	suspend fun getAllStudentsResult() = ApiBuilder.getApiService().getAllStudentsResult()
@@ -40,5 +42,14 @@ class Repository {
 	//update profile
 	suspend fun updateProfile(email: String, updateProfileModel: UpdateProfileModel) =
 		ApiBuilder.getApiService().updateSingleUser(email, updateProfileModel)
+
+	//attendance by course id
+	suspend fun getStudentAttendance(courseId: String) =
+		ApiBuilder.getApiService().getStudentAttendance(courseId)
+
+	//attendance by date
+	suspend fun getStudentAttendanceByDate(courseId: String, date: String) =
+		ApiBuilder.getApiService().getStudentAttendanceByDate(courseId, date)
+
 
 }

@@ -1,7 +1,7 @@
 package com.example.teachingapp.data.model.datamodel.teachermodel
 
 data class TeacherRegisterModel(
-	val _id: String?, // 629f0493462f89a26decdc90
+	val _id: String? = null, // 629f0493462f89a26decdc90
 	val id: String?, // 47587gsd
 	val role: String?, // teacher
 	val name: String?, // shakil

@@ -7,4 +7,5 @@ import com.example.teachingapp.data.model.datamodel.teachermodel.TeacherCourseMo
 interface CourseItemCLickListener {
 	fun onStudentItemClick(view: View, position: Int, coursesModel: CoursesModel)
 	fun onTeacherItemClick(view: View, position: Int, teacherCourseModel: TeacherCourseModel)
+	fun onAttendanceItemClick(view: View, position: Int, teacherCourseModel: TeacherCourseModel)
 }

@@ -61,85 +61,11 @@ class StudentDashboardActivity : AppCompatActivity() {
 
 		overLayLoadingManager = OverLayLoadingManager(this)
 		getUserProfile(email)
-//		getEnrolledCourses(email)
 
 		id_welcome_text.text = "WELCOME BACK! "
 		btn_total_paid.text = "Total Paid"
 		btn_balance.text = "Total Balance"
 
-		setUpView()
-
-	}
-
-	private fun setUpView() {
-		studentArrayList.add(
-			CoursesModel(
-				courseImg = R.drawable.img_english.toString(),
-				courseTitle = "English 1st paper"
-			)
-		)
-
-		studentArrayList.add(
-			CoursesModel(
-				courseImg = R.drawable.img_english.toString(),
-				courseTitle = "English 2nd paper"
-			)
-		)
-
-		studentArrayList.add(
-			CoursesModel(
-				courseImg = R.drawable.img_english.toString(),
-				courseTitle = "English 3rd paper"
-			)
-		)
-
-		studentArrayList.add(
-			CoursesModel(
-				courseImg = R.drawable.img_english.toString(),
-				courseTitle = "English 4th paper"
-			)
-		)
-
-		studentArrayList.add(
-			CoursesModel(
-				courseImg = R.drawable.img_english.toString(),
-				courseTitle = "English 5th paper"
-			)
-		)
-
-		studentArrayList.add(
-			CoursesModel(
-				courseImg = R.drawable.img_english.toString(),
-				courseTitle = "English 6th paper"
-			)
-		)
-
-		studentDashboardAdapter.submitList(studentArrayList)
-
-		id_rec_student_dashboard.apply {
-			setHasFixedSize(true)
-			layoutManager = GridLayoutManager(this@StudentDashboardActivity, 2)
-			adapter = studentDashboardAdapter
-		}
-
-		studentDashboardAdapter.studentItemClick(object : CourseItemCLickListener {
-			override fun onStudentItemClick(view: View, position: Int, coursesModel: CoursesModel) {
-				val intent = Intent(this@StudentDashboardActivity, MainActivity::class.java)
-				intent.apply {
-					putExtra("title", coursesModel.courseTitle)
-				}
-				startActivity(intent)
-			}
-
-			override fun onTeacherItemClick(
-				view: View,
-				position: Int,
-				teacherCourseModel: TeacherCourseModel
-			) {
-
-			}
-
-		})
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -199,10 +125,16 @@ class StudentDashboardActivity : AppCompatActivity() {
 					Status.SUCCESS -> {
 						overLayLoadingManager.dismiss()
 						val value = it.data
+
 						id_name_text.text = it.data?.name ?: "Student"
 						btn_total_paid.text = "Total Paid\n1432.32"
 						btn_balance.text = "Total Balance\n${value?.balance}"
 						Log.d(TAG, "getUserProfile: success: $value")
+
+						val courseCode = value?.courses
+						for (i in 0..courseCode?.size!!){
+							getEnrolledCourses("${courseCode.get(i)}")
+						}
 					}
 					Status.ERROR -> {
 						overLayLoadingManager.dismiss()
@@ -217,8 +149,8 @@ class StudentDashboardActivity : AppCompatActivity() {
 	}
 
 
-	private fun getEnrolledCourses(email: String) {
-		studentDashboardViewModel.showEnrolledCourses(email).asLiveData().observe(this) {
+	private fun getEnrolledCourses(courseID: String) {
+		studentDashboardViewModel.showEnrolledCourses(courseID).asLiveData().observe(this) {
 			Log.d(TAG, "getEnrolledCourses: enrolled courses response ${it.status}")
 
 			when (it.status) {
@@ -229,8 +161,22 @@ class StudentDashboardActivity : AppCompatActivity() {
 					overLayLoadingManager.dismiss()
 					val data = it.data
 					Log.d(TAG, "getEnrolledCourses: $data")
-					studentDashboardAdapter.submitList(data)
+					studentArrayList.add(
+						CoursesModel(
+							data?._id,
+							data?.courseId,
+							data?.courseTitle,
+							data?.courseImg
+						)
+					)
+					studentDashboardAdapter.submitList(studentArrayList)
 					studentDashboardAdapter.notifyDataSetChanged()
+
+					id_rec_student_dashboard.apply {
+						setHasFixedSize(true)
+						layoutManager = GridLayoutManager(this@StudentDashboardActivity, 2)
+						adapter = studentDashboardAdapter
+					}
 
 					studentDashboardAdapter.studentItemClick(object : CourseItemCLickListener {
 						override fun onStudentItemClick(
@@ -247,6 +193,14 @@ class StudentDashboardActivity : AppCompatActivity() {
 						}
 
 						override fun onTeacherItemClick(
+							view: View,
+							position: Int,
+							teacherCourseModel: TeacherCourseModel
+						) {
+
+						}
+
+						override fun onAttendanceItemClick(
 							view: View,
 							position: Int,
 							teacherCourseModel: TeacherCourseModel

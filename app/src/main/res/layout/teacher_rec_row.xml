@@ -38,12 +38,19 @@
         android:visibility="gone"
         tools:text="English 1st paper" />
 
-
     <Button
         android:id="@+id/btn_sample_teacher_dashboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="See All Enrolled Students"
+        android:textAllCaps="false"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/btn_sample_teacher_dashboard_att"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Attendance"
         android:textAllCaps="false"
         android:textSize="10sp" />
 

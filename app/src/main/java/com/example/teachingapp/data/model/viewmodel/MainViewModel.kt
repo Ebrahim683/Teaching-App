@@ -1,10 +1,10 @@
 package com.example.teachingapp.data.model.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.example.teachingapp.data.local.repository.Repository
 import com.example.teachingapp.data.model.datamodel.studentmodel.StudentRegistrationModel
 import com.example.teachingapp.data.model.datamodel.teachermodel.TeacherRegisterModel
 import com.example.teachingapp.data.model.datamodel.updateprofile.UpdateProfileModel
-import com.example.teachingapp.data.local.repository.Repository
 import com.example.teachingapp.utils.Resource
 import kotlinx.coroutines.flow.flow
 
@@ -84,7 +84,7 @@ class MainViewModel(private val repository: Repository) :
 			}
 
 		} catch (e: Exception) {
-			emit(Resource.error(null, e.message))
+//			emit(Resource.error(null, e.message))
 		}
 
 	}
@@ -142,11 +142,11 @@ class MainViewModel(private val repository: Repository) :
 	}
 
 	//for get enrolled courses
-	fun showEnrolledCourses(email: String) = flow {
+	fun showEnrolledCourses(courseCode: String) = flow {
 		emit(Resource.loading(null))
 
 		try {
-			val response = repository.showEnrolledCourses(email)
+			val response = repository.showEnrolledCourses(courseCode)
 
 			if (response.isSuccessful) {
 				when (response.code()) {
@@ -268,6 +268,57 @@ class MainViewModel(private val repository: Repository) :
 
 		} catch (e: Exception) {
 			emit(Resource.error(null, e.message))
+		}
+
+	}
+
+	//get attendance by course code
+	fun getStudentAttendance(courseId: String) = flow {
+		emit(Resource.loading(null))
+
+		try {
+			val response = repository.getStudentAttendance(courseId)
+			if (response.isSuccessful) {
+				when (response.code()) {
+					200 -> {
+						emit(Resource.success(response.body()))
+					}
+					else -> {
+						emit(Resource.error(null, response.errorBody().toString()))
+					}
+				}
+			} else {
+				emit(Resource.error(null, response.errorBody().toString()))
+			}
+
+		} catch (e: Exception) {
+			emit(Resource.error(null, e.message))
+		}
+
+	}
+
+
+	//get attendance by date
+	fun getStudentAttendanceByDate(courseId: String, date: String) = flow {
+		emit(Resource.loading(null))
+
+		try {
+			val response = repository.getStudentAttendanceByDate(courseId, date)
+			if (response.isSuccessful) {
+				when (response.code()) {
+					200 -> {
+						emit(Resource.success(response.body()))
+					}
+					else -> {
+						emit(Resource.error(null, response.errorBody().toString()))
+					}
+				}
+			} else {
+				emit(Resource.error(null, response.errorBody().toString()))
+			}
+
+		} catch (e: Exception) {
+//			emit(Resource.error(null, e.message))
 		}
 
 	}

@@ -92,6 +92,14 @@ class CoursesActivity : AppCompatActivity() {
 						) {
 
 						}
+
+						override fun onAttendanceItemClick(
+							view: View,
+							position: Int,
+							teacherCourseModel: TeacherCourseModel
+						) {
+
+						}
 					})
 				}
 				Status.ERROR -> {

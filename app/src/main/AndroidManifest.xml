@@ -17,6 +17,15 @@
         android:theme="@style/Theme.TeachingApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.attendance.AttendanceStudentListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.attendance.AttendanceCourseIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.coursedetails.TeacherCourseDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.balance.BalanceActivity"
             android:exported="false" />
         <activity
@@ -49,7 +58,7 @@
         <activity
             android:name=".ui.dashboard.teacherdashboard.TeacherDashboardActivity"
             android:exported="true"
-            android:label="Teacher's Portal"/>
+            android:label="Teacher&apos;s Portal" />
         <activity
             android:name=".ui.auth.StudentRegisterActivity"
             android:exported="true"

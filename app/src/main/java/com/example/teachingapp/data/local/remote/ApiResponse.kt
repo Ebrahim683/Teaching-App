@@ -1,5 +1,7 @@
 package com.example.teachingapp.data.local.remote
 
+import com.example.teachingapp.data.model.datamodel.attendance.AttendanceByDateModel
+import com.example.teachingapp.data.model.datamodel.attendance.AttendanceCourseModel
 import com.example.teachingapp.data.model.datamodel.coursemodel.CoursesModel
 import com.example.teachingapp.data.model.datamodel.response.RegistrationResponse
 import com.example.teachingapp.data.model.datamodel.response.UpdateProfileResponse
@@ -36,8 +38,8 @@ interface ApiResponse {
 	@GET("/users")
 	suspend fun getAllUsers(): Response<List<AllUsersModelItem>>
 
-	@GET("/courses/{email}")
-	suspend fun showEnrollCourses(@Path("email") email: String): Response<List<CoursesModel>>
+	@GET("/courses/{courseCode}")
+	suspend fun showEnrollCourses(@Path("courseCode") courseCode: String): Response<CoursesModel>
 
 	@GET("/courses/{courseId}")
 	suspend fun showTeacherCourses(@Path("courseId") courseId: String): Response<TeacherCourseModel>
@@ -50,4 +52,13 @@ interface ApiResponse {
 
 	@GET("/results/{id}")
 	suspend fun getSingleStudentResult(@Path("id") id: String): Response<SingleStudentResultModel>
+
+	@GET("/attendance/{courseId}")
+	suspend fun getStudentAttendance(@Path("courseId") courseId: String): Response<List<AttendanceCourseModel>>
+
+	@GET("/attendance/{courseId}/{date}")
+	suspend fun getStudentAttendanceByDate(
+		@Path("courseId") courseId: String,
+		@Path("date") date: String
+	): Response<List<AttendanceByDateModel>>
 }

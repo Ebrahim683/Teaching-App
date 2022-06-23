@@ -13,6 +13,8 @@
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/drawable/bg_result_number.xml" value="0.1" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/drawable/img_teacher_dashboard.xml" value="0.1" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_all_users.xml" value="0.10416666666666667" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_attendance_course_id.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_attendance_student_list.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_balance.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_courses.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_login.xml" value="0.19010416666666666" />
@@ -22,13 +24,17 @@
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_student_dashboard.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_student_profile.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_student_register.xml" value="0.19010416666666666" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_teacher_course_details.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_teacher_dashboard.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_teacher_profile.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_teacher_register.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/activity_update_profile.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/att_courseid_rec_row.xml" value="0.22" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/balance_rec_row.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/enrolled_st_row.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/overloading_layout.xml" value="0.21" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/single_result_row.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/st_att_rec_row.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/student_rec_row.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/layout/teacher_rec_row.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ebrah/StudioProjects/TeachingApp/app/src/main/res/menu/student_dashboard_menu.xml" value="0.20416666666666666" />
