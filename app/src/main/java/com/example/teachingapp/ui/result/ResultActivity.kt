@@ -1,5 +1,6 @@
 package com.example.teachingapp.ui.result
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -30,6 +31,9 @@ class ResultActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_result)
+
+		window.statusBarColor = resources.getColor(R.color.student_color)
+		supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.student_color)))
 
 		overLayLoadingManager = OverLayLoadingManager(this)
 		singleResultAdapter = SingleResultRecyclerViewAdapter()

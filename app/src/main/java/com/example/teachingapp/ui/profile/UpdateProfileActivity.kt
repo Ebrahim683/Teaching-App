@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isNotEmpty
 import androidx.lifecycle.asLiveData
 import com.example.teachingapp.Application
 import com.example.teachingapp.R
@@ -14,6 +15,7 @@ import com.example.teachingapp.data.model.viewmodel.MainViewModel
 import com.example.teachingapp.data.model.viewmodel.ViewModelFactory
 import com.example.teachingapp.utils.OverLayLoadingManager
 import com.example.teachingapp.utils.Status
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_update_profile.*
 
 
@@ -30,6 +32,10 @@ class UpdateProfileActivity : AppCompatActivity() {
 	private lateinit var role: String
 	private lateinit var overLayLoadingManager: OverLayLoadingManager
 
+	private lateinit var updateNameEt: TextInputLayout
+	private lateinit var updateMobileEt: TextInputLayout
+	private lateinit var updateAddressEt: TextInputLayout
+
 	private val updateViewModel by viewModels<MainViewModel> {
 		ViewModelFactory((application as Application).repository)
 	}
@@ -41,43 +47,57 @@ class UpdateProfileActivity : AppCompatActivity() {
 
 		overLayLoadingManager = OverLayLoadingManager(this)
 
-		id = intent.getStringExtra("id").toString() ?: "N/A"
-		name = intent.getStringExtra("name").toString() ?: "N/A"
-		email = intent.getStringExtra("email").toString() ?: "N/A"
-		dept = intent.getStringExtra("dept").toString() ?: "N/A"
-		mobile = intent.getStringExtra("mobile").toString() ?: "N/A"
-		address = intent.getStringExtra("address").toString() ?: "N/A"
-		role = intent.getStringExtra("role").toString() ?: "N/A"
+		updateNameEt = findViewById(R.id.id_update_profile_name)
+		updateMobileEt = findViewById(R.id.id_update_profile_mobile)
+		updateAddressEt = findViewById(R.id.id_update_profile_address)
+
+		id = intent.getStringExtra("id").toString()
+		name = intent.getStringExtra("name").toString()
+		email = intent.getStringExtra("email").toString()
+		dept = intent.getStringExtra("dept").toString()
+		mobile = intent.getStringExtra("mobile").toString()
+		address = intent.getStringExtra("address").toString()
+		role = intent.getStringExtra("role").toString()
 		Log.d(TAG, "onCreate: $role")
 
-		if (id != null) {
-			update_profile_user_id.text = id
-		}
-		if (name != null) {
-			id_update_profile_name.setText(name)
-			id_update_profile_name_top.text = name
-		}
-		if (email != null) {
-			id_update_profile_email.text = email
-		}
-		if (dept != null) {
-			id_update_profile_department.text = dept
-		}
-		if (mobile != null) {
-			id_update_profile_mobile.setText(mobile)
-		}
-		if (address != null) {
-			id_update_profile_address.setText(address)
-		}
+		update_profile_user_id.text = id
+		id_update_profile_name_top.text = name
+		id_update_profile_email.text = email
+		id_update_profile_department.text = dept
+
+		updateNameEt.editText?.setText(name)
+		updateMobileEt.editText?.setText(mobile)
+		updateAddressEt.editText?.setText(address)
+
 
 		id_btn_save.setOnClickListener {
-			updateProfile()
+
+			if (updateNameEt.isNotEmpty() && updateMobileEt.isNotEmpty() && updateAddressEt.isNotEmpty()) {
+				val updatedName = updateNameEt.editText?.text.toString()
+				val updatedMobile = updateMobileEt.editText?.text.toString()
+				val updatedAddress = updateAddressEt.editText?.text.toString()
+
+				updateProfile(
+					email,
+					UpdateProfileModel(
+						updatedName,
+						updatedMobile,
+						updatedAddress
+					)
+				)
+				Log.d(TAG, "onCreate: $updatedName/$updatedMobile/$updatedAddress")
+
+			} else {
+				Toast.makeText(this, "Please fill the form to update profile", Toast.LENGTH_SHORT)
+					.show()
+			}
 		}
 
 	}
 
-	private fun updateProfile() {
-		updateViewModel.updateProfile(email, UpdateProfileModel(name, mobile, address)).asLiveData()
+	private fun updateProfile(email: String, updateProfileModel: UpdateProfileModel) {
+		updateViewModel.updateProfile(email, updateProfileModel)
+			.asLiveData()
 			.observe(this) {
 				Log.d(TAG, "updateProfile: update profile response ${it.status}")
 
@@ -91,13 +111,8 @@ class UpdateProfileActivity : AppCompatActivity() {
 						if (value?.acknowledged == true) {
 							Log.d(TAG, "updateProfile: Updated")
 							Toast.makeText(this, "Updated successfully", Toast.LENGTH_SHORT).show()
-							if (role == "student") {
-								startActivity(Intent(this, StudentProfileActivity::class.java))
-								finish()
-							} else if (role == "teacher") {
-								startActivity(Intent(this, TeacherProfileActivity::class.java))
-								finish()
-							}
+							startActivity(Intent(this, StudentProfileActivity::class.java))
+							finish()
 						} else {
 							Toast.makeText(
 								this,
@@ -118,4 +133,5 @@ class UpdateProfileActivity : AppCompatActivity() {
 				}
 			}
 	}
+
 }

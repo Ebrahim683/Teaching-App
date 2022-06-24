@@ -1,6 +1,7 @@
 package com.example.teachingapp.ui.dashboard.studentdashboard
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -11,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.teachingapp.Application
 import com.example.teachingapp.R
 import com.example.teachingapp.data.model.datamodel.coursemodel.CoursesModel
@@ -22,7 +24,6 @@ import com.example.teachingapp.ui.balance.BalanceActivity
 import com.example.teachingapp.ui.course.CoursesActivity
 import com.example.teachingapp.ui.main.MainActivity
 import com.example.teachingapp.ui.profile.StudentProfileActivity
-import com.example.teachingapp.ui.result.AllStudentsResultActivity
 import com.example.teachingapp.ui.result.ResultActivity
 import com.example.teachingapp.utils.CourseItemCLickListener
 import com.example.teachingapp.utils.OverLayLoadingManager
@@ -41,6 +42,7 @@ class StudentDashboardActivity : AppCompatActivity() {
 	private lateinit var overLayLoadingManager: OverLayLoadingManager
 	private lateinit var auth: FirebaseAuth
 	private lateinit var email: String
+	private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
 	private val studentDashboardViewModel by viewModels<MainViewModel> {
 		ViewModelFactory((application as Application).repository)
@@ -51,6 +53,10 @@ class StudentDashboardActivity : AppCompatActivity() {
 		setContentView(R.layout.activity_student_dashboard)
 
 		supportActionBar?.setDisplayShowHomeEnabled(true)
+		window.statusBarColor = resources.getColor(R.color.student_color)
+		supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.student_color)))
+
+		swipeRefreshLayout = findViewById(R.id.id_refresh_student_dashboard)
 
 		sharedPrifUtils = SharedPrifUtils(this)
 		studentArrayList = ArrayList()
@@ -60,7 +66,13 @@ class StudentDashboardActivity : AppCompatActivity() {
 		email = auth.currentUser?.email.toString()
 
 		overLayLoadingManager = OverLayLoadingManager(this)
+
 		getUserProfile(email)
+
+		swipeRefreshLayout.setOnRefreshListener {
+			studentArrayList.clear()
+			getUserProfile(email)
+		}
 
 		id_welcome_text.text = "WELCOME BACK! "
 		btn_total_paid.text = "Total Paid"
@@ -100,9 +112,10 @@ class StudentDashboardActivity : AppCompatActivity() {
 //				startActivity(Intent(this, AllUsersActivity::class.java))
 //			}
 
-			R.id.menu_all_students_result -> {
-				startActivity(Intent(this, AllStudentsResultActivity::class.java))
-			}
+//			R.id.menu_all_students_result -> {
+//
+//				startActivity(Intent(this, AllStudentsResultActivity::class.java))
+//			}
 
 			R.id.menu_student_logout -> {
 				sharedPrifUtils.logOut()
@@ -132,7 +145,7 @@ class StudentDashboardActivity : AppCompatActivity() {
 						Log.d(TAG, "getUserProfile: success: $value")
 
 						val courseCode = value?.courses
-						for (i in 0..courseCode?.size!!){
+						for (i in 0..courseCode?.size!!) {
 							getEnrolledCourses("${courseCode.get(i)}")
 						}
 					}
@@ -209,15 +222,22 @@ class StudentDashboardActivity : AppCompatActivity() {
 						}
 
 					})
+					stopRefresh()
 				}
 				Status.ERROR -> {
 					overLayLoadingManager.dismiss()
-					Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
+//					Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
 				}
 				null -> {
 					overLayLoadingManager.dismiss()
 				}
 			}
+		}
+	}
+
+	private fun stopRefresh() {
+		if (swipeRefreshLayout.isRefreshing) {
+			swipeRefreshLayout.isRefreshing = false
 		}
 	}
 

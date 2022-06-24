@@ -1,6 +1,7 @@
 package com.example.teachingapp.ui.auth
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -49,6 +50,8 @@ class StudentRegisterActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_student_register)
 
+		window.statusBarColor = resources.getColor(R.color.student_color)
+		supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.student_color)))
 		overLayLoadingManager = OverLayLoadingManager(this)
 
 		val calendar = Calendar.getInstance(Locale.getDefault())

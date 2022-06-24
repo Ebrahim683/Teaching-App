@@ -1,9 +1,9 @@
 package com.example.teachingapp.ui.profile
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.asLiveData
@@ -11,6 +11,8 @@ import com.example.teachingapp.Application
 import com.example.teachingapp.R
 import com.example.teachingapp.data.model.viewmodel.MainViewModel
 import com.example.teachingapp.data.model.viewmodel.ViewModelFactory
+import com.example.teachingapp.ui.dashboard.studentdashboard.StudentDashboardActivity
+import com.example.teachingapp.ui.dashboard.teacherdashboard.TeacherDashboardActivity
 import com.example.teachingapp.utils.OverLayLoadingManager
 import com.example.teachingapp.utils.SharedPrifUtils
 import com.example.teachingapp.utils.Status
@@ -29,11 +31,14 @@ class StudentProfileActivity : AppCompatActivity() {
 	private lateinit var sharedPrifUtils: SharedPrifUtils
 	private lateinit var auth: FirebaseAuth
 	private lateinit var overLayLoadingManager: OverLayLoadingManager
-
+	private lateinit var role: String
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_student_profile)
+
+		window.statusBarColor = resources.getColor(R.color.student_color)
+		supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.student_color)))
 
 		overLayLoadingManager = OverLayLoadingManager(this)
 		sharedPrifUtils = SharedPrifUtils(this)
@@ -56,6 +61,7 @@ class StudentProfileActivity : AppCompatActivity() {
 					overLayLoadingManager.dismiss()
 
 					val value = it.data
+					role = value?.role.toString()
 					profile_user_id.text = value?.id.toString() ?: "N/A"
 					id_profile_name_top.text = value?.name.toString() ?: "N/A"
 					id_profile_name.text = value?.name.toString() ?: "N/A"
@@ -80,6 +86,7 @@ class StudentProfileActivity : AppCompatActivity() {
 							putExtra("role", value?.role.toString())
 						}
 						startActivity(intent)
+						finish()
 					}
 
 				}
@@ -94,4 +101,18 @@ class StudentProfileActivity : AppCompatActivity() {
 			}
 		}
 	}
+
+	override fun onBackPressed() {
+		super.onBackPressed()
+		if (role == "teacher") {
+			startActivity(Intent(this, TeacherDashboardActivity::class.java))
+			Log.d(TAG, "onBackPressed: go to teacher")
+			finishAffinity()
+		} else if (role == "student") {
+			startActivity(Intent(this, StudentDashboardActivity::class.java))
+			Log.d(TAG, "onBackPressed: go to student")
+			finishAffinity()
+		}
+	}
+
 }

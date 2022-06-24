@@ -175,7 +175,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:hint="Courses">
+            android:hint="SE111,SE121,SE131">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"

@@ -81,14 +81,19 @@
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
-                <EditText
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/id_update_profile_name"
-                    style="@style/Theme.Material3.DayNight"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="15sp"
-                    tools:text="MD. Ebrahim Rahman" />
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        tools:text="MD. Ebrahim Rahman" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
@@ -159,14 +164,19 @@
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
-                <EditText
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/id_update_profile_mobile"
-                    style="@style/Theme.Material3.DayNight"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="15sp"
-                    tools:text="01712345678" />
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        tools:text="01712345678" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
@@ -185,14 +195,19 @@
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
-                <EditText
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/id_update_profile_address"
-                    style="@style/Theme.Material3.DayNight"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="15sp"
-                    tools:text="Ashulia,Savar,Dhaka" />
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        tools:text="Ashulia,Savar,Dhaka" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 

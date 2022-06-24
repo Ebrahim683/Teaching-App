@@ -6,12 +6,12 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.teachingapp.Application
 import com.example.teachingapp.R
 import com.example.teachingapp.data.model.datamodel.coursemodel.CoursesModel
@@ -24,7 +24,6 @@ import com.example.teachingapp.ui.balance.BalanceActivity
 import com.example.teachingapp.ui.course.CoursesActivity
 import com.example.teachingapp.ui.coursedetails.TeacherCourseDetailsActivity
 import com.example.teachingapp.ui.profile.StudentProfileActivity
-import com.example.teachingapp.ui.result.AllStudentsResultActivity
 import com.example.teachingapp.ui.result.ResultActivity
 import com.example.teachingapp.utils.CourseItemCLickListener
 import com.example.teachingapp.utils.OverLayLoadingManager
@@ -44,6 +43,7 @@ class TeacherDashboardActivity : AppCompatActivity() {
 	private lateinit var auth: FirebaseAuth
 	private lateinit var email: String
 	private lateinit var recyclerView: RecyclerView
+	private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
 	private val teacherDashboardViewModel by viewModels<MainViewModel> {
 		ViewModelFactory((application as Application).repository)
@@ -54,8 +54,11 @@ class TeacherDashboardActivity : AppCompatActivity() {
 		setContentView(R.layout.activity_teacher_dashboard)
 
 		supportActionBar?.setDisplayShowHomeEnabled(true)
+		window.statusBarColor = resources.getColor(R.color.blue)
 
+		swipeRefreshLayout = findViewById(R.id.id_refresh_teacher_dashboard)
 		recyclerView = findViewById(R.id.id_teacher_rec_dashboard)
+
 		sharedPrifUtils = SharedPrifUtils(this)
 		teacherArrayList = ArrayList()
 		teacherDashboardAdapter = TeacherDashboardAdapter()
@@ -69,11 +72,15 @@ class TeacherDashboardActivity : AppCompatActivity() {
 		btn_teacher_balance.text = "Total Balance"
 
 		getUserProfile(email)
+		swipeRefreshLayout.setOnRefreshListener {
+			teacherArrayList.clear()
+			getUserProfile(email)
+		}
+
 	}
 
-
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-		menuInflater.inflate(R.menu.student_dashboard_menu, menu)
+		menuInflater.inflate(R.menu.teacher_dashboard_menu, menu)
 		return super.onCreateOptionsMenu(menu)
 	}
 
@@ -104,9 +111,9 @@ class TeacherDashboardActivity : AppCompatActivity() {
 //				startActivity(Intent(this, AllUsersActivity::class.java))
 //			}
 
-			R.id.menu_all_students_result -> {
-				startActivity(Intent(this, AllStudentsResultActivity::class.java))
-			}
+//			R.id.menu_all_students_result -> {
+//				startActivity(Intent(this, AllStudentsResultActivity::class.java))
+//			}
 
 			R.id.menu_student_logout -> {
 				sharedPrifUtils.logOut()
@@ -135,6 +142,7 @@ class TeacherDashboardActivity : AppCompatActivity() {
 						Log.d(TAG, "getUserProfile: success: $value")
 
 						val courses = value?.courses
+						Log.d(TAG, "getUserProfile: ${courses?.size}")
 						for (i in 0..courses?.size!!) {
 							getTeacherCourses("${courses[i]}")
 						}
@@ -154,7 +162,6 @@ class TeacherDashboardActivity : AppCompatActivity() {
 	private fun getTeacherCourses(courseId: String) {
 		teacherDashboardViewModel.showTeacherCourses(courseId).asLiveData().observe(this) { it ->
 			Log.d(TAG, "getTeacherCourses: teacher courses response ${it.status}")
-
 			when (it.status) {
 				Status.LOADING -> {
 					overLayLoadingManager.show()
@@ -162,7 +169,6 @@ class TeacherDashboardActivity : AppCompatActivity() {
 				Status.SUCCESS -> {
 					overLayLoadingManager.dismiss()
 					val data = it.data
-
 					teacherArrayList.add(
 						TeacherCourseModel(
 							data?._id,
@@ -223,18 +229,26 @@ class TeacherDashboardActivity : AppCompatActivity() {
 							startActivity(intent)
 						}
 					})
-
+					stopRefresh()
 					Log.d(TAG, "getTeacherCourses: $data")
 				}
 				Status.ERROR -> {
+					stopRefresh()
 					overLayLoadingManager.dismiss()
 					Log.d(TAG, "getTeacherCourses: error ${it.message}")
-					Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
+//					Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
 				}
 				null -> {
+					stopRefresh()
 					overLayLoadingManager.dismiss()
 				}
 			}
+		}
+	}
+
+	private fun stopRefresh() {
+		if (swipeRefreshLayout.isRefreshing) {
+			swipeRefreshLayout.isRefreshing = false
 		}
 	}
 

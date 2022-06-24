@@ -1,6 +1,7 @@
 package com.example.teachingapp.ui.dashboard.studentdashboard
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.example.teachingapp.data.model.datamodel.coursemodel.CoursesModel
 import com.example.teachingapp.utils.CourseItemCLickListener
 import com.squareup.picasso.Picasso
 
+private const val TAG = "studentDashboardAdapter"
 class StudentDashboardAdapter() :
 	ListAdapter<CoursesModel, StudentDashboardAdapter.StudentDashboardViewHolder>(
 		DIFF_UTILS_CALL_BACK
@@ -40,10 +42,14 @@ class StudentDashboardAdapter() :
 
 		fun bind(coursesModel: CoursesModel) {
 
+		try {
 			Picasso.get()
-				.load(coursesModel.courseImg)
+				.load(coursesModel.courseImg?:R.drawable.loading.toString())
 				.placeholder(R.drawable.loading)
 				.into(sample_st_rec_img);
+		}catch (e:Exception){
+			Log.d(TAG, "bind: ${e.message}")
+		}
 
 			sample_st_rec_title.text = coursesModel.courseTitle
 

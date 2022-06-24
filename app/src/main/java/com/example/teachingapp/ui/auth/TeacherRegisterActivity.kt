@@ -45,7 +45,6 @@ class TeacherRegisterActivity : AppCompatActivity() {
 	private lateinit var address: String
 	private lateinit var balance: String
 	private lateinit var registerDate: String
-	private lateinit var courseList: ArrayList<String>
 
 	private lateinit var overLayLoadingManager: OverLayLoadingManager
 
@@ -57,8 +56,9 @@ class TeacherRegisterActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_teacher_register)
 
+		window.statusBarColor = resources.getColor(R.color.blue)
+
 		overLayLoadingManager = OverLayLoadingManager(this)
-		courseList = ArrayList()
 
 		val calendar = Calendar.getInstance(Locale.getDefault())
 		val date = calendar.get(Calendar.DATE)
@@ -89,9 +89,8 @@ class TeacherRegisterActivity : AppCompatActivity() {
 		mobile = id_mobile.editText!!.text.toString().trim()
 		address = id_address.editText!!.text.toString()
 		balance = id_balance.editText!!.text.toString().trim()
-		val courses = arrayListOf<String>(id_courses.editText?.text.toString())
-		courseList.addAll(courses)
-		Log.d(TAG, "onCreate: courses: $courseList \ncourses count: ${courseList.size}")
+		val courses = id_courses.editText!!.text.toString()
+		val courseList = courses.split(",")
 
 		if (name.isEmpty()) {
 			id_name.editText!!.error = "Enter name"
@@ -136,7 +135,7 @@ class TeacherRegisterActivity : AppCompatActivity() {
 						address = address,
 						balance = balance,
 						registerDate = registerDate,
-						courses = courses
+						courses = courseList
 					)
 
 					teacherRegisterViewModel.teacherRegister(teacherRegisterModel).asLiveData()

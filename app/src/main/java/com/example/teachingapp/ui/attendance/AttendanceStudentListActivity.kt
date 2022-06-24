@@ -34,6 +34,8 @@ class AttendanceStudentListActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_attendance_student_list)
 
+		window.statusBarColor = resources.getColor(R.color.blue)
+
 		overLayLoadingManager = OverLayLoadingManager(this)
 		mAdapter = AttendanceStudentListAdapter()
 		arrayList = ArrayList()

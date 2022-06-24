@@ -34,6 +34,8 @@ class TeacherCourseDetailsActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_teacher_course_details)
 
+		window.statusBarColor = resources.getColor(R.color.blue)
+
 		overLayLoadingManager = OverLayLoadingManager(this)
 		mAdapter = TeacherCourseDetailsAdapter()
 		arrayList = ArrayList()

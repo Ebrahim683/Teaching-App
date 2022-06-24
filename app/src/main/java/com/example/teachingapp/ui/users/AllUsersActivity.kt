@@ -25,6 +25,8 @@ class AllUsersActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_all_users)
 
+		window.statusBarColor = resources.getColor(R.color.blue)
+
 		runBlocking {
 			getAllUsers()
 		}

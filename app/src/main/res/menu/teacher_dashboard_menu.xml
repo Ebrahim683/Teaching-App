@@ -14,10 +14,10 @@
             android:title="All Courses"
             app:showAsAction="ifRoom" />
 
-        <item
-            android:id="@+id/menu_student_result"
-            android:title="Result"
-            app:showAsAction="ifRoom" />
+<!--        <item-->
+<!--            android:id="@+id/menu_student_result"-->
+<!--            android:title="Result"-->
+<!--            app:showAsAction="ifRoom" />-->
 
         <item
             android:id="@+id/menu_student_balance"
@@ -29,10 +29,10 @@
         <!--           android:title="All Users"-->
         <!--           app:showAsAction="ifRoom" />-->
 
-        <!--        <item-->
-        <!--            android:id="@+id/menu_all_students_result"-->
-        <!--            android:title="All Students Result"-->
-        <!--            app:showAsAction="ifRoom" />-->
+<!--        <item-->
+<!--            android:id="@+id/menu_all_students_result"-->
+<!--            android:title="All Students Result"-->
+<!--            app:showAsAction="ifRoom" />-->
 
         <item
             android:id="@+id/menu_student_logout"

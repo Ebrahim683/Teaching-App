@@ -36,6 +36,8 @@ class AttendanceCourseIdActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_attendance_course_id)
 
+		window.statusBarColor = resources.getColor(R.color.blue)
+
 		overLayLoadingManager = OverLayLoadingManager(this)
 		mAdapter = AttendanceCourseIdAdapter()
 		arrayList = ArrayList()

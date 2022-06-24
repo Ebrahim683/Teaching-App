@@ -25,6 +25,8 @@ class AllStudentsResultActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_all_students_result)
 
+		window.statusBarColor = resources.getColor(R.color.blue)
+
 		runBlocking {
 			getAllStudentsResult()
 		}
