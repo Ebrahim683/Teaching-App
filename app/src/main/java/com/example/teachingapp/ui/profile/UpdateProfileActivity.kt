@@ -1,6 +1,7 @@
 package com.example.teachingapp.ui.profile
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -44,6 +45,16 @@ class UpdateProfileActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_update_profile)
 
+		role = intent.getStringExtra("role").toString()
+		if (role == "student") {
+			window.statusBarColor = resources.getColor(R.color.student_color)
+			supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.student_color)))
+			id_btn_save.setBackgroundColor(resources.getColor(R.color.student_color))
+		} else if (role == "teacher") {
+			window.statusBarColor = resources.getColor(R.color.blue)
+			supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.blue)))
+			id_btn_save.setBackgroundColor(resources.getColor(R.color.blue))
+		}
 
 		overLayLoadingManager = OverLayLoadingManager(this)
 
@@ -57,7 +68,7 @@ class UpdateProfileActivity : AppCompatActivity() {
 		dept = intent.getStringExtra("dept").toString()
 		mobile = intent.getStringExtra("mobile").toString()
 		address = intent.getStringExtra("address").toString()
-		role = intent.getStringExtra("role").toString()
+
 		Log.d(TAG, "onCreate: $role")
 
 		update_profile_user_id.text = id
@@ -111,7 +122,7 @@ class UpdateProfileActivity : AppCompatActivity() {
 						if (value?.acknowledged == true) {
 							Log.d(TAG, "updateProfile: Updated")
 							Toast.makeText(this, "Updated successfully", Toast.LENGTH_SHORT).show()
-							startActivity(Intent(this, StudentProfileActivity::class.java))
+							startActivity(Intent(this, ProfileActivity::class.java))
 							finish()
 						} else {
 							Toast.makeText(

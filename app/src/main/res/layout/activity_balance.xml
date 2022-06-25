@@ -12,8 +12,7 @@
         <RelativeLayout
             android:id="@+id/text_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FB73B5">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/id_balance_hi_text"

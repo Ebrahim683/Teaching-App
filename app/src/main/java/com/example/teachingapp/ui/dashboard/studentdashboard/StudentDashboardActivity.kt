@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.asLiveData
@@ -23,7 +22,7 @@ import com.example.teachingapp.ui.auth.LoginActivity
 import com.example.teachingapp.ui.balance.BalanceActivity
 import com.example.teachingapp.ui.course.CoursesActivity
 import com.example.teachingapp.ui.main.MainActivity
-import com.example.teachingapp.ui.profile.StudentProfileActivity
+import com.example.teachingapp.ui.profile.ProfileActivity
 import com.example.teachingapp.ui.result.ResultActivity
 import com.example.teachingapp.utils.CourseItemCLickListener
 import com.example.teachingapp.utils.OverLayLoadingManager
@@ -89,7 +88,10 @@ class StudentDashboardActivity : AppCompatActivity() {
 
 		when (item.itemId) {
 			R.id.menu_student_profile -> {
-				startActivity(Intent(this, StudentProfileActivity::class.java))
+				val intent = Intent(this, ProfileActivity::class.java).apply {
+					putExtra("role", "student")
+				}
+				startActivity(intent)
 			}
 
 			R.id.menu_student_courses -> {
@@ -105,7 +107,10 @@ class StudentDashboardActivity : AppCompatActivity() {
 			}
 
 			R.id.menu_student_balance -> {
-				startActivity(Intent(this, BalanceActivity::class.java))
+				val intent = Intent(this, BalanceActivity::class.java).apply {
+					putExtra("role", "student")
+				}
+				startActivity(intent)
 			}
 
 //			R.id.menu_all_users -> {

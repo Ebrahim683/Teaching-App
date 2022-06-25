@@ -1,5 +1,6 @@
 package com.example.teachingapp.ui.balance
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -26,6 +27,7 @@ class BalanceActivity : AppCompatActivity() {
 	private lateinit var arrayList: ArrayList<BalanceModel>
 	private lateinit var email: String
 	private lateinit var auth: FirebaseAuth
+	private lateinit var iRole: String
 
 	private val balanceViewModel by viewModels<MainViewModel> {
 		ViewModelFactory((application as Application).repository)
@@ -35,6 +37,16 @@ class BalanceActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_balance)
 
+		iRole = intent.getStringExtra("role").toString()
+		if (iRole == "student") {
+			window.statusBarColor = resources.getColor(R.color.student_color)
+			supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.student_color)))
+			text_layout.setBackgroundColor(resources.getColor(R.color.student_color))
+		} else if (iRole == "teacher") {
+			window.statusBarColor = resources.getColor(R.color.blue)
+			supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.blue)))
+			text_layout.setBackgroundColor(resources.getColor(R.color.blue))
+		}
 
 		overLayLoadingManager = OverLayLoadingManager(this)
 		balanceAdapter = BalanceAdapter()

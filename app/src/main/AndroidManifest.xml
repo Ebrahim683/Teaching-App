@@ -49,7 +49,7 @@
             android:name=".ui.users.AllUsersActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.profile.StudentProfileActivity"
+            android:name=".ui.profile.ProfileActivity"
             android:exported="true"
             android:label="My Profile" />
         <activity

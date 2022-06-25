@@ -5,22 +5,22 @@
     <group android:id="@+id/student_dashboard_menu_group">
 
         <item
-            android:id="@+id/menu_student_profile"
+            android:id="@+id/menu_teacher_profile"
             android:title="Profile"
             app:showAsAction="ifRoom" />
 
         <item
-            android:id="@+id/menu_student_courses"
+            android:id="@+id/menu_teacher_courses"
             android:title="All Courses"
             app:showAsAction="ifRoom" />
 
 <!--        <item-->
-<!--            android:id="@+id/menu_student_result"-->
+<!--            android:id="@+id/menu_teacher_result"-->
 <!--            android:title="Result"-->
 <!--            app:showAsAction="ifRoom" />-->
 
         <item
-            android:id="@+id/menu_student_balance"
+            android:id="@+id/menu_teacher_balance"
             android:title="Balance"
             app:showAsAction="ifRoom" />
 
@@ -35,7 +35,7 @@
 <!--            app:showAsAction="ifRoom" />-->
 
         <item
-            android:id="@+id/menu_student_logout"
+            android:id="@+id/menu_teacher_logout"
             android:title="Logout"
             app:showAsAction="ifRoom" />
 

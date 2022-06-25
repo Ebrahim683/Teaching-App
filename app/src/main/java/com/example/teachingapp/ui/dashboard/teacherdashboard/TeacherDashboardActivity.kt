@@ -23,8 +23,7 @@ import com.example.teachingapp.ui.auth.LoginActivity
 import com.example.teachingapp.ui.balance.BalanceActivity
 import com.example.teachingapp.ui.course.CoursesActivity
 import com.example.teachingapp.ui.coursedetails.TeacherCourseDetailsActivity
-import com.example.teachingapp.ui.profile.StudentProfileActivity
-import com.example.teachingapp.ui.result.ResultActivity
+import com.example.teachingapp.ui.profile.ProfileActivity
 import com.example.teachingapp.utils.CourseItemCLickListener
 import com.example.teachingapp.utils.OverLayLoadingManager
 import com.example.teachingapp.utils.SharedPrifUtils
@@ -87,24 +86,30 @@ class TeacherDashboardActivity : AppCompatActivity() {
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
 		when (item.itemId) {
-			R.id.menu_student_profile -> {
-				startActivity(Intent(this, StudentProfileActivity::class.java))
-			}
-
-			R.id.menu_student_courses -> {
-				startActivity(Intent(this, CoursesActivity::class.java))
-			}
-
-			R.id.menu_student_result -> {
-				val intent = Intent(this, ResultActivity::class.java)
-				intent.apply {
-					putExtra("email", email)
+			R.id.menu_teacher_profile -> {
+				val intent = Intent(this, ProfileActivity::class.java).apply {
+					putExtra("role", "teacher")
 				}
 				startActivity(intent)
 			}
 
-			R.id.menu_student_balance -> {
-				startActivity(Intent(this, BalanceActivity::class.java))
+			R.id.menu_teacher_courses -> {
+				startActivity(Intent(this, CoursesActivity::class.java))
+			}
+
+//			R.id.menu_student_result -> {
+//				val intent = Intent(this, ResultActivity::class.java)
+//				intent.apply {
+//					putExtra("email", email)
+//				}
+//				startActivity(intent)
+//			}
+
+			R.id.menu_teacher_balance -> {
+				val intent = Intent(this, BalanceActivity::class.java).apply {
+					putExtra("role", "teacher")
+				}
+				startActivity(intent)
 			}
 
 //			R.id.menu_all_users -> {
@@ -115,7 +120,7 @@ class TeacherDashboardActivity : AppCompatActivity() {
 //				startActivity(Intent(this, AllStudentsResultActivity::class.java))
 //			}
 
-			R.id.menu_student_logout -> {
+			R.id.menu_teacher_logout -> {
 				sharedPrifUtils.logOut()
 				startActivity(Intent(this, LoginActivity::class.java))
 				finish()

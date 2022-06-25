@@ -22,7 +22,7 @@ import kotlinx.coroutines.runBlocking
 
 private const val TAG = "studentProfileActivity"
 
-class StudentProfileActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity() {
 
 	private val studentProfileViewModel by viewModels<MainViewModel> {
 		ViewModelFactory((application as Application).repository)
@@ -32,13 +32,24 @@ class StudentProfileActivity : AppCompatActivity() {
 	private lateinit var auth: FirebaseAuth
 	private lateinit var overLayLoadingManager: OverLayLoadingManager
 	private lateinit var role: String
+	private lateinit var iRole: String
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_student_profile)
 
 		window.statusBarColor = resources.getColor(R.color.student_color)
-		supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.student_color)))
+
+		iRole = intent.getStringExtra("role").toString()
+		if (iRole == "student") {
+			window.statusBarColor = resources.getColor(R.color.student_color)
+			supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.student_color)))
+			id_btn_update.setBackgroundColor(resources.getColor(R.color.student_color))
+		} else if (iRole == "teacher"){
+			window.statusBarColor = resources.getColor(R.color.blue)
+			supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.blue)))
+			id_btn_update.setBackgroundColor(resources.getColor(R.color.blue))
+		}
 
 		overLayLoadingManager = OverLayLoadingManager(this)
 		sharedPrifUtils = SharedPrifUtils(this)
